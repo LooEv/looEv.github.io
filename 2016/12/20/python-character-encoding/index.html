@@ -1,0 +1,746 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>容易撩倒人的Python字符编码问题 | Loo&#39;s Blog</title>
+    <meta name="author" content="三好先生">
+    
+    <meta name="description" content="如果你正在使用 Python2.x ，那么你一定遇到了一些或者很多关于字符编码解码报错情况。是的，我遇到了不少，我决定写这篇文章，为了让自己加深对 python 的字符编码的理解。
+相关概念
+计算机中的一切均为bytes(字节)。硬盘中的文件为一系列的byte组成，网络中传输的只有byte。所有的信息，在你写的程序中进进出出的，均由byte组成。
+字符：我们现在看到的英文字母、中文汉字就是经过计算机解码后对人类友好的抽象符号的表现
+encode() 编码： 将字符转换成二进制流
+decode() 解码： 将二进制流转换成字符">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="容易撩倒人的Python字符编码问题">
+    <meta property="og:site_name" content="Loo&#39;s Blog.让故事有营养。">
+
+    
+    <meta property="og:image" content="undefined">
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Loo&#39;s Blog.让故事有营养。" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.9.0/styles/solarized-dark.min.css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+</html>
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Loo&#39;s Blog.让故事有营养。</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/">
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives">
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading">
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about">
+                            <i class="fa fa-user "></i>
+                            
+                            关于我
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search">
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://ocf3ikxr2.bkt.clouddn.com/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Loo小强</p>
+                        <p class="desc">Python/Web开发/Linux</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/">
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives">
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading">
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about">
+                    <i class="fa fa-user "></i>
+                    
+                    关于我
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search">
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术/">
+                    技术 <span class="right">11 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Python/">
+                    Python <span class="right">8 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Hexo/">
+                    Hexo <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Vim/">
+                    Vim <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活与工作/">
+                    生活与工作 <span class="right">2 篇</span></a>
+                
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/Python/">Python</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>容易撩倒人的Python字符编码问题</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-12-20T06:05:44.000Z"><a href="/2016/12/20/python-character-encoding/">2016-12-20</a></time>
+
+            <div style="float: right;color: #E91E63">
+    <span id="busuanzi_container_page_pv" style="display: none;">
+    阅读次数 <span id="busuanzi_value_page_pv"></span></span>
+</div>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/字符编码/" class="chip pink lighten-1">字符编码</a>
+        
+            <a href="/tags/中文处理/" class="chip pink lighten-1">中文处理</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#相关概念"><span class="section table-of-contents-text">相关概念</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#coding-utf-8和sys-getdefaultencoding"><span class="section table-of-contents-text">coding=utf-8和sys.getdefaultencoding()</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#关于sys-stdout-encoding"><span class="section table-of-contents-text">关于sys.stdout.encoding</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Python2-x的字符编码问题"><span class="section table-of-contents-text">Python2.x的字符编码问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Python3-x-的字符编码问题"><span class="section table-of-contents-text">Python3.x 的字符编码问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结与建议"><span class="section table-of-contents-text">总结与建议</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>如果你正在使用 Python2.x ，那么你一定遇到了一些或者很多关于字符编码解码报错情况。是的，我遇到了不少，我决定写这篇文章，为了让自己加深对 python 的字符编码的理解。</p>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><ul>
+<li>计算机中的一切均为bytes(字节)。硬盘中的文件为一系列的byte组成，网络中传输的只有byte。所有的信息，在你写的程序中进进出出的，均由byte组成。</li>
+<li>字符：我们现在看到的英文字母、中文汉字就是经过计算机解码后对人类友好的抽象符号的表现</li>
+<li>encode() 编码： 将字符转换成二进制流</li>
+<li>decode() 解码： 将二进制流转换成字符<a id="more"></a>
+</li>
+</ul>
+<h2 id="coding-utf-8和sys-getdefaultencoding"><a href="#coding-utf-8和sys-getdefaultencoding" class="headerlink" title="coding=utf-8和sys.getdefaultencoding()"></a>coding=utf-8和sys.getdefaultencoding()</h2><p>如果我们的 py文件中包含中文，往往需要在第一行或者第二行添加：<br><code># coding=utf-8</code>  或者  <code># -*- coding: utf-8 -*-</code></p>
+<p>这表示声明该 py文件中定义的字符串变量使用的编码方式为 utf-8。<br>python2.x 中，</p>
+<pre><code class="python">&gt;&gt;&gt; sys.getdefaultencoding()
+&#39;ascii&#39;
+</code></pre>
+<p>python3.x 中，</p>
+<pre><code class="python">&gt;&gt;&gt; sys.getdefaultencoding()
+&#39;utf-8&#39;
+</code></pre>
+<p>在使用 encode() 和 decode() 的时候，如果不传入任何参数，那么 python 解释器就会使用 sys.getdefaultencoding() 所指代的编码解码方式进行 encode() 和 decode()。</p>
+<h2 id="关于sys-stdout-encoding"><a href="#关于sys-stdout-encoding" class="headerlink" title="关于sys.stdout.encoding"></a>关于sys.stdout.encoding</h2><p>在 Windows 系统下使用 python，特别要注意编码问题，因为我们一般都会使用 <code>coding=utf-8</code> 将 py文件中定义的字符串的编码方式设置为 UTF-8，而 Windows 系统下默认的编码方式为 GBK，即 <code>sys.stdout.encoding</code> 为 GBK（说明：微软的 CP936 不等于 GBK，它们有几十个不太常用的字符不同，所以绝大多数情况下感觉不到差异）。<br>如果我们不显式地将 bytes 编码成 unicode，然后再解码成 GBK的话，往往会出现乱码的情况，这一点需要特别注意。所以说，明确输出平台所采用的默认编码方式很重要，搞清楚了这一点解决 python 中文乱码的问题就容易多了。</p>
+<h2 id="Python2-x的字符编码问题"><a href="#Python2-x的字符编码问题" class="headerlink" title="Python2.x的字符编码问题"></a>Python2.x的字符编码问题</h2><p>在 Python2.x 中，有三大类 string 类型，unicode（text string），str（byte string，二进制数据），basestring，是前两者的父类。具体分析如下：</p>
+<ol>
+<li><p>str 和 unicode 都是 basestring 的子类，不可被调用或实例化，仅可用于类型检查。isinstance(obj, basestring) 等价于 isinstance(obj, (str, unicode))。</p>
+<pre><code class="python">my_str = &#39;我们&#39;
+my_unicode = u&#39;我们&#39;
+
+&gt;&gt;&gt; isinstance(my_str, basestring)
+True
+
+&gt;&gt;&gt; isinstance(my_unicode, basestring)
+True
+</code></pre>
+</li>
+<li><p>str 等价于 bytes，是由unicode经过编码(encode)后的字节组成的字节串。在 python2.x 中你不加任何修饰直接定义的字符串，其实是字节串，切记这一点。</p>
+<pre><code class="python">&gt;&gt;&gt; str == bytes
+True
+
+&gt;&gt;&gt; &#39;我们&#39; == b&#39;我们&#39;
+True
+
+&gt;&gt;&gt; b&#39;我们&#39; == str(&#39;我们&#39;)
+True
+
+&gt;&gt;&gt; b&#39;我们&#39;
+&#39;\xce\xd2\xc3\xc7&#39;
+
+&gt;&gt;&gt; len(&#39;我们&#39;)
+4
+#len(&#39;我们&#39;)在windows平台下长度为4（默认编码为GBK），Linux平台下长度为6（默认编码为UTF-8）。
+</code></pre>
+</li>
+<li><p>unicode 才是真正意义上的字符串，是由 str 解码(decode)后的字符组成的字符串。定义unicode 字符串，直接在 string 前面加前缀 <strong>u</strong> 即可。</p>
+<pre><code class="python">&gt;&gt;&gt; len(u&#39;我们&#39;)
+2
+
+&gt;&gt;&gt; unicode(&#39;我们&#39;, &#39;utf-8&#39;)
+u&#39;\u6211\u4eec&#39;
+
+&gt;&gt;&gt; &#39;我们&#39;.decode(&#39;utf-8&#39;)
+u&#39;\u6211\u4eec&#39;
+
+#无论是在Windows下还是在Linux下 u&#39;我们&#39; 的字符串长度都为2，这正是我们所想要的结果。
+</code></pre>
+</li>
+<li><p>相互转换<br><strong>str –(decode)–&gt; unicode –(encode)–&gt; str</strong></p>
+</li>
+</ol>
+<h2 id="Python3-x-的字符编码问题"><a href="#Python3-x-的字符编码问题" class="headerlink" title="Python3.x 的字符编码问题"></a>Python3.x 的字符编码问题</h2><p>在 python3.x 中，字符编码问题就变得不那么混乱了，具体看下面：</p>
+<ol>
+<li><p>bytes 为字节串，如果你想定义一个字节串，不像在 python2.x 中那样直接定义就行了。在 python3.x 中，一般使用下面两种方式定义一个字节串：</p>
+<pre><code class="python">#第一种方法，加上 b 前缀
+&gt;&gt;&gt; b&#39;I am a byte&#39;
+
+#第二种方法：
+&gt;&gt;&gt; bytes(something, encodeing=&#39;xxx&#39;)
+</code></pre>
+<p>如果想要定义一个含有中文的字节串，必须使用第二种方法，并且将 <code>encoding</code>参数设置为你为该 py文件设置的字符编码方式，即你在 py文件的头部设置的类似于 <code># coding: utf-8</code> 中的编码方式。</p>
+</li>
+<li><p>str，采用 unicode 方式编码的字符串。无论是 <code>&#39;我们&#39;</code> 还是 <code>u&#39;我们&#39;</code>，都是str对象。</p>
+<pre><code class="python">&gt;&gt;&gt; isinstance(&#39;我们&#39;,str)
+True
+
+&gt;&gt;&gt; isinstance(u&#39;我们&#39;,str)
+True
+
+&gt;&gt;&gt; len(&#39;我们&#39;)
+2
+</code></pre>
+</li>
+<li><p>相互转换<br><strong>bytes –(decode)–&gt; str –(encode)–&gt; bytes</strong></p>
+</li>
+</ol>
+<h2 id="总结与建议"><a href="#总结与建议" class="headerlink" title="总结与建议"></a>总结与建议</h2><ol>
+<li>在 python2.x 中，对两个字符串进行操作时，如果这两个字符串有一个是 unicode 编码，有一个是非 unicode 编码，python 会自动使用 sys.getdefaultencoding() 的解码方式将非 unicode 编码的字符串 decode 成 unicode 编码，再进行字符串操作，python2.x 悄悄掩盖掉了 byte 到 unicode 的转换，很容易出现问题。而在 python3.x 中，取消了 bytes 和 unicode 之间的自动隐性转换。</li>
+<li>在需要转换的时候，全部显式转换。从字节解码成文本，用 your_string.decode(encoding)，从文本编码成字节，用 your_string.encode(encoding)。</li>
+<li>任何可能包含中文的字符串，请全部加上 <strong>u</strong> 前缀，这能减少很多问题。</li>
+<li>从外部（网页、文件、数据库等）读取数据时，读取的是字节串，应该将其 decode 成 unicode进行使用；当需要向外部输出字符串时，用该外部媒介所能接收的编码形式 encode 字符串后再传递给它。</li>
+</ol>
+<p>参考：</p>
+<ul>
+<li><a href="http://ajucs.com/2015/11/10/Python-character-encoding-explained.html" rel="external nofollow noopener noreferrer" target="_blank">字符编码及Python中文处理精解</a></li>
+<li><a href="http://in355hz.iteye.com/blog/1860787" rel="external nofollow noopener noreferrer" target="_blank">也谈 Python 的中文编码处理</a></li>
+<li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html" rel="external nofollow noopener noreferrer" target="_blank">Unicode之痛</a></li>
+<li><a href="http://www.cnblogs.com/Xjng/p/5093905.html" rel="external nofollow noopener noreferrer" target="_blank">不得不知道的Python字符串编码相关的知识</a></li>
+</ul>
+
+                
+<p class="pink-link-context">
+    <a href="/2018/08/07/for-wen-wen/" rel="next" title="致文文的一封道歉信">
+    上一篇：致文文的一封道歉信
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2016/12/01/duoshuo-comments-notifier/" rel="next" title="完善多说评论的邮件提醒功能">
+    下一篇：完善多说评论的邮件提醒功能
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/12/20/python-character-encoding/" data-title="容易撩倒人的Python字符编码问题" data-url="http://threehao.com/2016/12/20/python-character-encoding/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'exyloo'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1" data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://twitter.com/ExyLoo" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-twitter"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/LooEv" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank" rel="external nofollow noopener noreferrer">林寿山的技术博客</a>
+                
+                    <a class="social-link" href="http://ajucs.com/" target="_blank" rel="external nofollow noopener noreferrer">阿驹的博客</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 三好先生 threehao.com<span>&nbsp;</span>
+            <i class="fa fa fa-heart"></i>
+            <p class="right" style="margin-top: 0;">
+            <span id="busuanzi_container_site_uv" style="display: none;">
+            您好，您是本站点的第 <span id="busuanzi_value_site_uv" style="color: yellow;"></span> 位访客，祝您生活工作愉快
+            </span></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-search').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?96fbeb5ef19833b99e20089f1b2c8575";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+

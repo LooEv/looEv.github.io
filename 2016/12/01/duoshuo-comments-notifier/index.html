@@ -1,0 +1,697 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>完善多说评论的邮件提醒功能 | Loo&#39;s Blog</title>
+    <meta name="author" content="三好先生">
+    
+    <meta name="description" content="介绍如果你的博客使用了多说评论，那么很不幸，你的博客有了新留言你收不到提醒。多说评论系统设定的是只有别人回复了你的留言才会邮件通知你。虽然刚开始写博客的时候，给我们留言的人很少，或者也许以后也没有多少留言（此处应该有一个笑哭的表情，此刻看看窗外，那只猫也在嘲笑我），不过如果有人给我们留言了，那我们及时回复他也是一种尊重他的表现，所以用 python 编写了一个脚本解决多说评论的不完美提醒。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="完善多说评论的邮件提醒功能">
+    <meta property="og:site_name" content="Loo&#39;s Blog.让故事有营养。">
+
+    
+    <meta property="og:image" content="undefined">
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Loo&#39;s Blog.让故事有营养。" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.9.0/styles/solarized-dark.min.css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+</html>
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Loo&#39;s Blog.让故事有营养。</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/">
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives">
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading">
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about">
+                            <i class="fa fa-user "></i>
+                            
+                            关于我
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search">
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://ocf3ikxr2.bkt.clouddn.com/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Loo小强</p>
+                        <p class="desc">Python/Web开发/Linux</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/">
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives">
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading">
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about">
+                    <i class="fa fa-user "></i>
+                    
+                    关于我
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search">
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术/">
+                    技术 <span class="right">11 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Python/">
+                    Python <span class="right">8 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Hexo/">
+                    Hexo <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Vim/">
+                    Vim <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活与工作/">
+                    生活与工作 <span class="right">2 篇</span></a>
+                
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/Python/">Python</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>完善多说评论的邮件提醒功能</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-12-01T12:16:12.000Z"><a href="/2016/12/01/duoshuo-comments-notifier/">2016-12-01</a></time>
+
+            <div style="float: right;color: #E91E63">
+    <span id="busuanzi_container_page_pv" style="display: none;">
+    阅读次数 <span id="busuanzi_value_page_pv"></span></span>
+</div>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/python/" class="chip pink lighten-1">python</a>
+        
+            <a href="/tags/邮件提醒/" class="chip pink lighten-1">邮件提醒</a>
+        
+            <a href="/tags/多说评论/" class="chip pink lighten-1">多说评论</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#介绍"><span class="section table-of-contents-text">介绍</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Requirement"><span class="section table-of-contents-text">Requirement</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#实现原理"><span class="section table-of-contents-text">实现原理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#注意事项"><span class="section table-of-contents-text">注意事项</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#结果展示"><span class="section table-of-contents-text">结果展示</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#配置文件-config-conf"><span class="section table-of-contents-text">配置文件 (_config.conf)</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#使用方法"><span class="section table-of-contents-text">使用方法</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#让脚本更加友好"><span class="section table-of-contents-text">让脚本更加友好</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#实现细节"><span class="section table-of-contents-text">实现细节</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>如果你的博客使用了多说评论，那么很不幸，你的博客有了新留言你收不到提醒。多说评论系统设定的是只有别人回复了你的留言才会邮件通知你。虽然刚开始写博客的时候，给我们留言的人很少，或者也许以后也没有多少留言（<strong>此处应该有一个笑哭的表情</strong>，此刻看看窗外，那只猫也在嘲笑我），不过如果有人给我们留言了，那我们及时回复他也是一种尊重他的表现，所以用 python 编写了一个脚本解决多说评论的不完美提醒。<a id="more"></a></p>
+<h2 id="Requirement"><a href="#Requirement" class="headerlink" title="Requirement"></a>Requirement</h2><ul>
+<li><strong>python 2.7</strong> 以及 <strong>python 3</strong> 都可运行；</li>
+<li>此脚本只用到 <code>requests</code> 这一个第三方库，请安装：<pre><code class="bash">$ pip install requests
+</code></pre>
+</li>
+</ul>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>这是获取 <a href="http://dev.duoshuo.com/docs/50037b11b66af78d0c000009" rel="external nofollow noopener noreferrer" target="_blank">多说评论后台操作日志</a> 的官方说明。通过 <code>requests</code> 获取博客的评论日志，判断是否产生了新的日志，然后进一步判断是否是别人的评论或者回复（因为你自己回复别人也会产生操作日志），如果条件成立，则发送邮件；否则，等待下一次 check。另外，如果在脚本运行过程中出现问题，脚本会将错误信息以邮件的形式发送给我们，以便我们及时处理。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>请确保你开启了多说评论的通知提醒（在“个人资料”选项中填写邮箱地址），并且选择<strong>每条新回复都提醒我</strong>。因为只有这样设置，你在其他人的博客中留了言，然后别人回复了你，或者在你自己的博客中，别人回复了你，才能收到多说官方的邮件提醒。<br>而我编写的这个脚本，也是用于你自己博客中留言的邮件提醒。在你自己的博客中，如果别人回复了你（注意区分概念，是回复了你的某一条评论），多说评论官方会发送邮件提醒，此时，脚本就应该判断这条回复的父评论的作者是否是自己，如果是脚本就不发送提醒邮件，以免重复提醒。<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_settings.jpg" alt="设置多说"></p>
+<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><ol>
+<li><p>如果新评论数 &lt;= 20，那么显示详细的评论信息，并将文章题目设置为超链接，可以点击访问该文章，效果如下：<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment1.jpg" alt="效果展示1"></p>
+</li>
+<li><p>如果新评论数 &gt; 20，就只是提示功能（显示过多反而不好），如下：<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment2.jpg" alt="效果展示2"></p>
+</li>
+<li><p>正如下面图片中展示的一样，脚本运行发生错误，邮件提示我“获取多说评论后台日志失败”，果然我检测多说网，那天晚上真的宕机了，不过第二天又恢复正常了~.~<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment3.jpg" alt="效果展示3"></p>
+</li>
+</ol>
+<hr>
+<h2 id="配置文件-config-conf"><a href="#配置文件-config-conf" class="headerlink" title="配置文件 (_config.conf)"></a>配置文件 (_config.conf)</h2><pre><code>[duoshuo_account]
+short_name = 你在多说评论站点注册的多说二级域名
+secret = 站点密钥
+myself_author_id = 你的多说id，用于剔除自己给别人的回复提醒（这个id不好找，希望你能找到）
+myself_author_url = 你的个人主页
+
+[email_info]
+email_host = smtp.xxx.com    # 请确保你的邮箱开启了SMTP服务
+from_address = 发生邮件的邮箱地址
+email_password = 邮箱密码
+to_address = 接收邮件的邮箱地址
+</code></pre><p>请认真仔细填写配置文件。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><strong>第一步</strong>：</p>
+<pre><code class="bash">$ git clone https://github.com/LooEv/duoshuo-comment-notifier.git ~/duoshuo-comment-notifier
+
+$ chmod +x ~/duoshuo-comment-notifier/comment_notifier.py    #这一步很重要！
+</code></pre>
+<p><strong>第二步，编辑 <code>_config.conf</code> 文件，将自己的配置信息填写完整。</strong></p>
+<p><strong>第三步，设置定时运行脚本</strong>：<br>在 Linux中，运行下面的命令：</p>
+<pre><code class="bash">$ crontab -e    # 编辑当前用户的crontab文件
+</code></pre>
+<p>添加下面的内容：</p>
+<pre><code class="bash">0,30 8-23 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1
+# 每天8点到23点之间每隔30分钟执行脚本
+
+* 8-23/1 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1
+# 或者每天8点到23点之间每隔1小时执行脚本
+
+* 8-23/5 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1
+# 或者每天8点到23点之间每隔5小时执行脚本
+</code></pre>
+<p>视自己的情况而定，选择适当的间隔周期执行脚本。<br><code>&gt;/dev/null 2&gt;&amp;1</code> 表示将脚本的标准输出流和标准错误流都不显示（不用担心，脚本设置的日志文件依然会产生，以便我们发现问题所在），防止 crontab 产生的日志文件过大。<br><strong>注意</strong>：如果你正在使用多个版本的 python，请自行修改上面代码中的 <code>/usr/bin/env python</code>，尽量将执行这个脚本的python的路径定死，并确保该python版本环境下安装了所需的第三方库。<br>恩，那什么，如果你没有 vps,使用的是 Windows 系统，可以使用创建<strong>计划任务</strong>的方式运行脚本，这里就不涉及相关教程了，如有需要请自行 google。</p>
+<h2 id="让脚本更加友好"><a href="#让脚本更加友好" class="headerlink" title="让脚本更加友好"></a>让脚本更加友好</h2><p>为了让脚本的功能更加人性化，我设置了如下的特性：</p>
+<ul>
+<li>如果新评论数大于20条，就不显示评论的详细信息，只提示评论数，并提示你登录多说网查看详情，因为如果信息过多的话也不方便在邮件里面阅读。</li>
+<li>当脚本由于某些原因运行失败，比如无法获取多说网的数据，如果连续运行失败的次数 &lt;= 2，就发送提醒邮件，提醒你检查原因；如果连续运行失败的次数 &gt; 2，就不再发送邮件，因为如果我们暂时不方便修复脚本，提醒邮件就会一直发，让人心烦，所以需要设置这个判断功能。</li>
+<li>如果脚本连续运行失败的次数过多，而只会发送两封提醒邮件，如果你太忙很容易忘记这件事儿。为了不让你忘记检查原因，就每隔一定时间重新发送提醒邮件给你，发送邮件的周期请自行修改，因为这个周期需要根据你设置的执行脚本的间隔周期调整，才能起到既提醒了你又不扰人的效果。</li>
+<li>如果脚本运行的日志文件过大，会发送邮件提醒你删除日志（这种情况应该很少会出现，不过以防万一）。</li>
+</ul>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>如果你想要了解具体的实现细节（比如函数功能的介绍等），可以查看我的 github，请点击 <a href="https://github.com/LooEv/duoshuo-comment-notifier#实现细节" rel="external nofollow noopener noreferrer" target="_blank">这里</a>。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2016/12/20/python-character-encoding/" rel="next" title="容易撩倒人的Python字符编码问题">
+    上一篇：容易撩倒人的Python字符编码问题
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2016/10/21/A-bridge-to-YouCompleteMe/" rel="next" title="帮助你更快地安装vim插件 YouCompleteMe">
+    下一篇：帮助你更快地安装vim插件 YouCompleteMe
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/12/01/duoshuo-comments-notifier/" data-title="完善多说评论的邮件提醒功能" data-url="http://threehao.com/2016/12/01/duoshuo-comments-notifier/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'exyloo'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1" data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://twitter.com/ExyLoo" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-twitter"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/LooEv" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank" rel="external nofollow noopener noreferrer">林寿山的技术博客</a>
+                
+                    <a class="social-link" href="http://ajucs.com/" target="_blank" rel="external nofollow noopener noreferrer">阿驹的博客</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 三好先生 threehao.com<span>&nbsp;</span>
+            <i class="fa fa fa-heart"></i>
+            <p class="right" style="margin-top: 0;">
+            <span id="busuanzi_container_site_uv" style="display: none;">
+            您好，您是本站点的第 <span id="busuanzi_value_site_uv" style="color: yellow;"></span> 位访客，祝您生活工作愉快
+            </span></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-search').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?96fbeb5ef19833b99e20089f1b2c8575";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+

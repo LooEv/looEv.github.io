@@ -1,0 +1,704 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>关于Linux的一些实用技巧 | Loo&#39;s Blog</title>
+    <meta name="author" content="三好先生">
+    
+    <meta name="description" content="此博文会分享给大家一些我在使用Linux系统过程中学到或者总结的实用技巧。既然选择了计算机编程这个行业，那么熟练使用Linux是非常有必要的。所以如果你是编程的初学者，建议你要学习使用Linux系统，你可以随便看看一些互联网招聘平台，上面发布的招聘信息里面，其中大部分都提到了对Linux系统的要求。所以，骚年，别犹豫了，就一个字：学！">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="关于Linux的一些实用技巧">
+    <meta property="og:site_name" content="Loo&#39;s Blog.让故事有营养。">
+
+    
+    <meta property="og:image" content="undefined">
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Loo&#39;s Blog.让故事有营养。" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.9.0/styles/solarized-dark.min.css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+</html>
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Loo&#39;s Blog.让故事有营养。</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/">
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives">
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading">
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about">
+                            <i class="fa fa-user "></i>
+                            
+                            关于我
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search">
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://ocf3ikxr2.bkt.clouddn.com/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Loo小强</p>
+                        <p class="desc">Python/Web开发/Linux</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/">
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives">
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading">
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about">
+                    <i class="fa fa-user "></i>
+                    
+                    关于我
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search">
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术/">
+                    技术 <span class="right">11 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Python/">
+                    Python <span class="right">8 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Hexo/">
+                    Hexo <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Vim/">
+                    Vim <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活与工作/">
+                    生活与工作 <span class="right">2 篇</span></a>
+                
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/Linux/">Linux</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>关于Linux的一些实用技巧</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-10-18T12:15:37.000Z"><a href="/2016/10/18/linux-utility-skills/">2016-10-18</a></time>
+
+            <div style="float: right;color: #E91E63">
+    <span id="busuanzi_container_page_pv" style="display: none;">
+    阅读次数 <span id="busuanzi_value_page_pv"></span></span>
+</div>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Linux/" class="chip pink lighten-1">Linux</a>
+        
+            <a href="/tags/utility/" class="chip pink lighten-1">utility</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#sudo-命令"><span class="section table-of-contents-text">sudo 命令</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#zsh使用通配符的问题"><span class="section table-of-contents-text">zsh使用通配符的问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#关于”man”这个男人的事儿"><span class="section table-of-contents-text">关于”man”这个男人的事儿</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#修改Linux系统的时区"><span class="section table-of-contents-text">修改Linux系统的时区</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#tmux下Vim-colorscheme失效的问题"><span class="section table-of-contents-text">tmux下Vim colorscheme失效的问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#tmux-与-Windows-之间的复制粘贴问题"><span class="section table-of-contents-text">tmux 与 Windows 之间的复制粘贴问题</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>此博文会分享给大家一些我在使用Linux系统过程中学到或者总结的实用技巧。既然选择了计算机编程这个行业，那么熟练使用Linux是非常有必要的。所以如果你是编程的初学者，建议你要学习使用Linux系统，你可以随便看看一些互联网招聘平台，上面发布的招聘信息里面，其中大部分都提到了对Linux系统的要求。所以，骚年，别犹豫了，就一个字：学！<a id="more"></a></p>
+<h2 id="sudo-命令"><a href="#sudo-命令" class="headerlink" title="sudo 命令"></a>sudo 命令</h2><p>Linux 下使用 sudo 命令，可以让普通用户临时执行一些或者全部的 root 命令。<br>在/etc/sudoers 文件中进行设置哪些用户可以临时获得 root 权限：</p>
+<pre><code class="bash">vagrant ALL=(ALL) ALL
+</code></pre>
+<p>上面的例子表示：</p>
+<ul>
+<li>vagrant： 允许<strong>vagrant</strong>用户使用 sudo</li>
+<li>ALL： 允许从任何终端（任何机器）使用 sudo（如果只想让vagrant用户在本主机而不能通过诸如ssh等终端使用sudo，就使用<code>yourhostname</code>代替<code>ALL</code>）</li>
+<li>(ALL): 允许以任何用户执行 sudo 命令</li>
+<li>ALL： 允许 sudo 权限执行任何命令（此处可以指定执行哪些命令）</li>
+</ul>
+<p>很多时候我们会遇到这样一种尴尬情况：使用 vim 编辑了一个没有修改权限的文件，准备保存退出的时候才发现忘记添加 <code>sudo</code> 命令了，只好强制退出去，然后重新加上 <code>sudo</code> 命令使用 vim 进行编辑。。。每每遇到这个事儿都情不自禁地对自己竖起中指把眼镜往上推了推。不过现在无需为此烦恼了，在 vim 的普通模式下，想要修改没有权限的文件，只需要输入 <strong><code>:w !sudo tee %</code></strong>（注意：该有的空格一定要有）就可以解决这个问题！我终于不再对自己竖中指了，哎~.~<br>有时候我们输入了一条很长的命令，按 Enter 之后出现无权限操作的提醒，这时候我们无需使用 <code>Ctrl + P</code> 回到上一条命令，然后在该命令前面加上 <code>sudo</code> 再执行这“该死”的命令，我们只需输入 <code>sudo !!</code> 即可执行上一条命令（这里的 !! 代表上一条命令）。</p>
+<h2 id="zsh使用通配符的问题"><a href="#zsh使用通配符的问题" class="headerlink" title="zsh使用通配符的问题"></a>zsh使用通配符的问题</h2><p>如果你在Linux系统上使用zsh，你需要特别注意一个独特之处：<strong>通配符展开是语言级的，通配符无法匹配是一个语法错误</strong>。比如，我想在centos系统（shell使用的是zsh）中查询man手册有没有中文版的，如下：</p>
+<pre><code class="bash">$ yum list |grep man.*zh
+zsh: no matches found: man.*zh
+
+Exiting on Broken Pipe
+</code></pre>
+<p>在使用 grep 和 find 等命令时，如果使用通配符匹配时，默认情况下，bash 在匹配失败时就使用原来的内容，而 zsh 则会报告一个错误。可以执行下面的命令解决这个问题：</p>
+<pre><code class="bash">$ setopt nonomatch
+</code></pre>
+<p>在 zsh 中执行 setopt nonomatch 则告诉它不要报告 <code>no matches</code> 的错误，而是当匹配失败时直接使用原来的内容。<br>实际上，不管是 bash 还是 zsh，不管设置了什么选项，只要把 <code>man.*zh</code> 加上引号 <code>&quot;man.*zh&quot;</code>，就可以解决问题。</p>
+<pre><code class="bash">$ yum list |grep &quot;man.*zh&quot;
+man-pages-zh-CN.noarch                  1.5.2-4.el7                    @base
+</code></pre>
+<h2 id="关于”man”这个男人的事儿"><a href="#关于”man”这个男人的事儿" class="headerlink" title="关于”man”这个男人的事儿"></a>关于”man”这个男人的事儿</h2><p>当我们使用 minimal 的 Centos 或者 Ubuntu 系统时，有些命令没有安装导致无法使用，比如无法使用 man 命令，因为系统没有自带man手册，这时需要我们手动安装man手册(当然是英文版的):</p>
+<pre><code class="bash">$ sudo yum install man-pages
+</code></pre>
+<p>如果你还想要安装中文版的man手册，以便在看不明白英文的时候使用，那么你可以执行上一节中的相关命令，查询到man手册中文版安装包的名字，然后安装就可以了。<br>为了更方便在适当的时候使用man中文版手册，我们可以进行一些设置。在~/.bashrc（如果你使用的是zsh，那么在~/.zshrc）中添加:</p>
+<pre><code class="bash">alias zman=&#39;man -M /usr/share/man/zh_CN&#39;
+#系统默认公共手册页地址一般在：/usr/share/man下面
+</code></pre>
+<p>然后再执行：</p>
+<pre><code class="bash">$ source ~/.bashrc    # 或者 source ~/.zshrc
+</code></pre>
+<p>这样就可以使用 zman 命令使用中文版的 man 手册了。这里就不 such as 了 ^.^。</p>
+<h2 id="修改Linux系统的时区"><a href="#修改Linux系统的时区" class="headerlink" title="修改Linux系统的时区"></a>修改Linux系统的时区</h2><p>如果我们购买了国外的vps用来翻越GFW或者建站，往往需要修改vps的系统时区。有多种方法可以实现修改时区。下面是其中一种：<br>复制相应的时区文件，替换掉系统时区文件；或者创建链接文件</p>
+<pre><code class="bash">$ cp /usr/share/zoneinfo/$主时区/$次时区 /etc/localtime
+
+# 在中国可以使用：
+$ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# 或者创建软链接
+$ rm -rf /etc/localtime #先删除默认的时区设置
+$ ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</code></pre>
+<h2 id="tmux下Vim-colorscheme失效的问题"><a href="#tmux下Vim-colorscheme失效的问题" class="headerlink" title="tmux下Vim colorscheme失效的问题"></a>tmux下Vim colorscheme失效的问题</h2><p>如果你发现在使用 tmux 的时候，vim 的配色显示和你在 bash 或者 zsh 中显示不一样时，你可以试着这样做：</p>
+<ul>
+<li>在 <code>.bashrc</code> 或者 <code>.zshrc</code> 中增加：<pre><code class="bash">alias tmux=&#39;tmux -2&#39;    # 意思是使用256色终端
+</code></pre>
+</li>
+<li>在 <code>.tmux.conf</code> 文件中增加：<pre><code class="bash">set -g default-terminal &quot;screen-256color&quot;
+</code></pre>
+</li>
+</ul>
+<p>然后执行 <code>source ~/.bashrc    # 或者 source ~/.zshrc</code><br>什么？！不知道 <code>.tmux.conf</code> 在哪儿？别怕，我最开始使用 tmux 的时候，也不知道在哪儿。这个文件我们可以手动创建并修改，一般存放在下面这两个地方：</p>
+<ul>
+<li>etc/tmux.conf 系统中所有用户的全局配置</li>
+<li>~/.tmux.conf 用户个人的配置</li>
+</ul>
+<p>根据自己的情况选择创建的位置，创建之后最好在 <code>.tmux.conf</code> 文件中添加：</p>
+<pre><code class="bash"># 将 R 设置为加载配置文件，并显示&quot;Config reloaded..&quot;信息
+bind R source-file ~/.tmux.conf \; display-message &quot;Config reloaded..&quot;
+</code></pre>
+<p>这样你就可以不重启 tmux ，而使用快捷键 <code>前缀+R</code> 使得 <code>.tmux.conf</code> 配置生效。<br>Ps: tmux 默认的 prefix 键是 <strong><code>Ctrl+b</code></strong>， 建议修改为 <strong><code>Ctrl+a</code></strong>。</p>
+<h2 id="tmux-与-Windows-之间的复制粘贴问题"><a href="#tmux-与-Windows-之间的复制粘贴问题" class="headerlink" title="tmux 与 Windows 之间的复制粘贴问题"></a>tmux 与 Windows 之间的复制粘贴问题</h2><p>如果我们在 Windows 系统中使用 putty 登录 Linux，并且使用 tmux 进行学习和工作，你会发现之前在 putty 中使用很方便的复制粘贴功能不能用了（复制：鼠标左键选择；粘贴：鼠标右键，很方便在 putty 中和 Windows 中互相复制粘贴）。<br>解决办法很简单，按住 <strong><code>shift</code></strong> 键就可以使用鼠标方便地复制粘贴了。</p>
+<p><strong>保持更新</strong></p>
+
+                
+<p class="pink-link-context">
+    <a href="/2016/10/21/A-bridge-to-YouCompleteMe/" rel="next" title="帮助你更快地安装vim插件 YouCompleteMe">
+    上一篇：帮助你更快地安装vim插件 YouCompleteMe
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2016/10/08/scan-ip-and-port/" rel="next" title="使用多线程、多进程和协程扫描ip和可用的端口">
+    下一篇：使用多线程、多进程和协程扫描ip和可用的端口
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/10/18/linux-utility-skills/" data-title="关于Linux的一些实用技巧" data-url="http://threehao.com/2016/10/18/linux-utility-skills/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'exyloo'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1" data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://twitter.com/ExyLoo" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-twitter"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/LooEv" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank" rel="external nofollow noopener noreferrer">林寿山的技术博客</a>
+                
+                    <a class="social-link" href="http://ajucs.com/" target="_blank" rel="external nofollow noopener noreferrer">阿驹的博客</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 三好先生 threehao.com<span>&nbsp;</span>
+            <i class="fa fa fa-heart"></i>
+            <p class="right" style="margin-top: 0;">
+            <span id="busuanzi_container_site_uv" style="display: none;">
+            您好，您是本站点的第 <span id="busuanzi_value_site_uv" style="color: yellow;"></span> 位访客，祝您生活工作愉快
+            </span></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-search').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?96fbeb5ef19833b99e20089f1b2c8575";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+

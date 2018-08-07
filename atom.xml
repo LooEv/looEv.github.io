@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Loo&#39;s Blog.让故事有营养。</title>
+  
+  <subtitle>Loo&#39;s Blog</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://threehao.com/"/>
+  <updated>2018-08-07T11:49:46.380Z</updated>
+  <id>http://threehao.com/</id>
+  
+  <author>
+    <name>三好先生</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>致文文的一封道歉信</title>
+    <link href="http://threehao.com/2018/08/07/for-wen-wen/"/>
+    <id>http://threehao.com/2018/08/07/for-wen-wen/</id>
+    <published>2018-08-07T08:33:05.000Z</published>
+    <updated>2018-08-07T11:49:46.380Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　当你看到这篇文章的时候，我已经加班写完这篇文章并部署到远程然后回家了。首先，要给你真诚地说声抱歉，我为我说的一些错误的话向你道歉，让你受委屈了，但你要相信那绝非我的本意，我当时想表达的意思完全不是你想的那样，我根本不是在质疑你的人品作风，这个关乎你的声誉，所以我必须要向你解释一下，也请你相信我不是个爱计较的人。不管后面我们是做恋人也好，普通朋友也罢，我不想我们之间有什么误会。如果这次给你留下了什么坏印象，那都是我自己造成的，坦然接受。那天晚上聊完天我也很难过，结果第二天起床就不知道为什么重感冒了，应该是老天爷在替你惩罚我。我记得你说过喜欢吃榴莲，我给你订了一个不大不小的榴莲蛋糕，明天（8月8号）上午10点半到十一点半到达。你要是还在生气，不愿意接受我的道歉，那明天配送人员给你打电话的时候，你就把蛋糕送给配送人员吃吧。你大人有大量，就原谅我吧，希望下次见面的时候不要不理我。这是我第一次通过这种方式给一个人道歉。得之我幸，失之我命。希望你开心幸福。 ——— 愧疚的罗某某写于2018年08月07日19:45</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;　　当你看到这篇文章的时候，我已经加班写完这篇文章并部署到远程然后回家了。首先，要给你真诚地说声抱歉，我为我说的一些错误的话向你道歉，让你受委屈了，但你要相信那绝非我的本意，我当时想表达的意思完全不是你想的那样，我根本不是在质疑你的人品作风，这个关乎你的声誉，所以我必须要向
+      
+    
+    </summary>
+    
+      <category term="生活与工作" scheme="http://threehao.com/categories/%E7%94%9F%E6%B4%BB%E4%B8%8E%E5%B7%A5%E4%BD%9C/"/>
+    
+    
+      <category term="love" scheme="http://threehao.com/tags/love/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>容易撩倒人的Python字符编码问题</title>
+    <link href="http://threehao.com/2016/12/20/python-character-encoding/"/>
+    <id>http://threehao.com/2016/12/20/python-character-encoding/</id>
+    <published>2016-12-20T06:05:44.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果你正在使用 Python2.x ，那么你一定遇到了一些或者很多关于字符编码解码报错情况。是的，我遇到了不少，我决定写这篇文章，为了让自己加深对 python 的字符编码的理解。</p><h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><ul><li>计算机中的一切均为bytes(字节)。硬盘中的文件为一系列的byte组成，网络中传输的只有byte。所有的信息，在你写的程序中进进出出的，均由byte组成。</li><li>字符：我们现在看到的英文字母、中文汉字就是经过计算机解码后对人类友好的抽象符号的表现</li><li>encode() 编码： 将字符转换成二进制流</li><li>decode() 解码： 将二进制流转换成字符<a id="more"></a></li></ul><h2 id="coding-utf-8和sys-getdefaultencoding"><a href="#coding-utf-8和sys-getdefaultencoding" class="headerlink" title="coding=utf-8和sys.getdefaultencoding()"></a>coding=utf-8和sys.getdefaultencoding()</h2><p>如果我们的 py文件中包含中文，往往需要在第一行或者第二行添加：<br><code># coding=utf-8</code>  或者  <code># -*- coding: utf-8 -*-</code></p><p>这表示声明该 py文件中定义的字符串变量使用的编码方式为 utf-8。<br>python2.x 中，</p><pre><code class="python">&gt;&gt;&gt; sys.getdefaultencoding()&#39;ascii&#39;</code></pre><p>python3.x 中，</p><pre><code class="python">&gt;&gt;&gt; sys.getdefaultencoding()&#39;utf-8&#39;</code></pre><p>在使用 encode() 和 decode() 的时候，如果不传入任何参数，那么 python 解释器就会使用 sys.getdefaultencoding() 所指代的编码解码方式进行 encode() 和 decode()。</p><h2 id="关于sys-stdout-encoding"><a href="#关于sys-stdout-encoding" class="headerlink" title="关于sys.stdout.encoding"></a>关于sys.stdout.encoding</h2><p>在 Windows 系统下使用 python，特别要注意编码问题，因为我们一般都会使用 <code>coding=utf-8</code> 将 py文件中定义的字符串的编码方式设置为 UTF-8，而 Windows 系统下默认的编码方式为 GBK，即 <code>sys.stdout.encoding</code> 为 GBK（说明：微软的 CP936 不等于 GBK，它们有几十个不太常用的字符不同，所以绝大多数情况下感觉不到差异）。<br>如果我们不显式地将 bytes 编码成 unicode，然后再解码成 GBK的话，往往会出现乱码的情况，这一点需要特别注意。所以说，明确输出平台所采用的默认编码方式很重要，搞清楚了这一点解决 python 中文乱码的问题就容易多了。</p><h2 id="Python2-x的字符编码问题"><a href="#Python2-x的字符编码问题" class="headerlink" title="Python2.x的字符编码问题"></a>Python2.x的字符编码问题</h2><p>在 Python2.x 中，有三大类 string 类型，unicode（text string），str（byte string，二进制数据），basestring，是前两者的父类。具体分析如下：</p><ol><li><p>str 和 unicode 都是 basestring 的子类，不可被调用或实例化，仅可用于类型检查。isinstance(obj, basestring) 等价于 isinstance(obj, (str, unicode))。</p><pre><code class="python">my_str = &#39;我们&#39;my_unicode = u&#39;我们&#39;&gt;&gt;&gt; isinstance(my_str, basestring)True&gt;&gt;&gt; isinstance(my_unicode, basestring)True</code></pre></li><li><p>str 等价于 bytes，是由unicode经过编码(encode)后的字节组成的字节串。在 python2.x 中你不加任何修饰直接定义的字符串，其实是字节串，切记这一点。</p><pre><code class="python">&gt;&gt;&gt; str == bytesTrue&gt;&gt;&gt; &#39;我们&#39; == b&#39;我们&#39;True&gt;&gt;&gt; b&#39;我们&#39; == str(&#39;我们&#39;)True&gt;&gt;&gt; b&#39;我们&#39;&#39;\xce\xd2\xc3\xc7&#39;&gt;&gt;&gt; len(&#39;我们&#39;)4#len(&#39;我们&#39;)在windows平台下长度为4（默认编码为GBK），Linux平台下长度为6（默认编码为UTF-8）。</code></pre></li><li><p>unicode 才是真正意义上的字符串，是由 str 解码(decode)后的字符组成的字符串。定义unicode 字符串，直接在 string 前面加前缀 <strong>u</strong> 即可。</p><pre><code class="python">&gt;&gt;&gt; len(u&#39;我们&#39;)2&gt;&gt;&gt; unicode(&#39;我们&#39;, &#39;utf-8&#39;)u&#39;\u6211\u4eec&#39;&gt;&gt;&gt; &#39;我们&#39;.decode(&#39;utf-8&#39;)u&#39;\u6211\u4eec&#39;#无论是在Windows下还是在Linux下 u&#39;我们&#39; 的字符串长度都为2，这正是我们所想要的结果。</code></pre></li><li><p>相互转换<br><strong>str –(decode)–&gt; unicode –(encode)–&gt; str</strong></p></li></ol><h2 id="Python3-x-的字符编码问题"><a href="#Python3-x-的字符编码问题" class="headerlink" title="Python3.x 的字符编码问题"></a>Python3.x 的字符编码问题</h2><p>在 python3.x 中，字符编码问题就变得不那么混乱了，具体看下面：</p><ol><li><p>bytes 为字节串，如果你想定义一个字节串，不像在 python2.x 中那样直接定义就行了。在 python3.x 中，一般使用下面两种方式定义一个字节串：</p><pre><code class="python">#第一种方法，加上 b 前缀&gt;&gt;&gt; b&#39;I am a byte&#39;#第二种方法：&gt;&gt;&gt; bytes(something, encodeing=&#39;xxx&#39;)</code></pre><p>如果想要定义一个含有中文的字节串，必须使用第二种方法，并且将 <code>encoding</code>参数设置为你为该 py文件设置的字符编码方式，即你在 py文件的头部设置的类似于 <code># coding: utf-8</code> 中的编码方式。</p></li><li><p>str，采用 unicode 方式编码的字符串。无论是 <code>&#39;我们&#39;</code> 还是 <code>u&#39;我们&#39;</code>，都是str对象。</p><pre><code class="python">&gt;&gt;&gt; isinstance(&#39;我们&#39;,str)True&gt;&gt;&gt; isinstance(u&#39;我们&#39;,str)True&gt;&gt;&gt; len(&#39;我们&#39;)2</code></pre></li><li><p>相互转换<br><strong>bytes –(decode)–&gt; str –(encode)–&gt; bytes</strong></p></li></ol><h2 id="总结与建议"><a href="#总结与建议" class="headerlink" title="总结与建议"></a>总结与建议</h2><ol><li>在 python2.x 中，对两个字符串进行操作时，如果这两个字符串有一个是 unicode 编码，有一个是非 unicode 编码，python 会自动使用 sys.getdefaultencoding() 的解码方式将非 unicode 编码的字符串 decode 成 unicode 编码，再进行字符串操作，python2.x 悄悄掩盖掉了 byte 到 unicode 的转换，很容易出现问题。而在 python3.x 中，取消了 bytes 和 unicode 之间的自动隐性转换。</li><li>在需要转换的时候，全部显式转换。从字节解码成文本，用 your_string.decode(encoding)，从文本编码成字节，用 your_string.encode(encoding)。</li><li>任何可能包含中文的字符串，请全部加上 <strong>u</strong> 前缀，这能减少很多问题。</li><li>从外部（网页、文件、数据库等）读取数据时，读取的是字节串，应该将其 decode 成 unicode进行使用；当需要向外部输出字符串时，用该外部媒介所能接收的编码形式 encode 字符串后再传递给它。</li></ol><p>参考：</p><ul><li><a href="http://ajucs.com/2015/11/10/Python-character-encoding-explained.html" rel="external nofollow noopener noreferrer" target="_blank">字符编码及Python中文处理精解</a></li><li><a href="http://in355hz.iteye.com/blog/1860787" rel="external nofollow noopener noreferrer" target="_blank">也谈 Python 的中文编码处理</a></li><li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html" rel="external nofollow noopener noreferrer" target="_blank">Unicode之痛</a></li><li><a href="http://www.cnblogs.com/Xjng/p/5093905.html" rel="external nofollow noopener noreferrer" target="_blank">不得不知道的Python字符串编码相关的知识</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果你正在使用 Python2.x ，那么你一定遇到了一些或者很多关于字符编码解码报错情况。是的，我遇到了不少，我决定写这篇文章，为了让自己加深对 python 的字符编码的理解。&lt;/p&gt;
+&lt;h2 id=&quot;相关概念&quot;&gt;&lt;a href=&quot;#相关概念&quot; class=&quot;headerlink&quot; title=&quot;相关概念&quot;&gt;&lt;/a&gt;相关概念&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;计算机中的一切均为bytes(字节)。硬盘中的文件为一系列的byte组成，网络中传输的只有byte。所有的信息，在你写的程序中进进出出的，均由byte组成。&lt;/li&gt;
+&lt;li&gt;字符：我们现在看到的英文字母、中文汉字就是经过计算机解码后对人类友好的抽象符号的表现&lt;/li&gt;
+&lt;li&gt;encode() 编码： 将字符转换成二进制流&lt;/li&gt;
+&lt;li&gt;decode() 解码： 将二进制流转换成字符
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="字符编码" scheme="http://threehao.com/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/"/>
+    
+      <category term="中文处理" scheme="http://threehao.com/tags/%E4%B8%AD%E6%96%87%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>完善多说评论的邮件提醒功能</title>
+    <link href="http://threehao.com/2016/12/01/duoshuo-comments-notifier/"/>
+    <id>http://threehao.com/2016/12/01/duoshuo-comments-notifier/</id>
+    <published>2016-12-01T12:16:12.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>如果你的博客使用了多说评论，那么很不幸，你的博客有了新留言你收不到提醒。多说评论系统设定的是只有别人回复了你的留言才会邮件通知你。虽然刚开始写博客的时候，给我们留言的人很少，或者也许以后也没有多少留言（<strong>此处应该有一个笑哭的表情</strong>，此刻看看窗外，那只猫也在嘲笑我），不过如果有人给我们留言了，那我们及时回复他也是一种尊重他的表现，所以用 python 编写了一个脚本解决多说评论的不完美提醒。<a id="more"></a></p><h2 id="Requirement"><a href="#Requirement" class="headerlink" title="Requirement"></a>Requirement</h2><ul><li><strong>python 2.7</strong> 以及 <strong>python 3</strong> 都可运行；</li><li>此脚本只用到 <code>requests</code> 这一个第三方库，请安装：<pre><code class="bash">$ pip install requests</code></pre></li></ul><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>这是获取 <a href="http://dev.duoshuo.com/docs/50037b11b66af78d0c000009" rel="external nofollow noopener noreferrer" target="_blank">多说评论后台操作日志</a> 的官方说明。通过 <code>requests</code> 获取博客的评论日志，判断是否产生了新的日志，然后进一步判断是否是别人的评论或者回复（因为你自己回复别人也会产生操作日志），如果条件成立，则发送邮件；否则，等待下一次 check。另外，如果在脚本运行过程中出现问题，脚本会将错误信息以邮件的形式发送给我们，以便我们及时处理。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>请确保你开启了多说评论的通知提醒（在“个人资料”选项中填写邮箱地址），并且选择<strong>每条新回复都提醒我</strong>。因为只有这样设置，你在其他人的博客中留了言，然后别人回复了你，或者在你自己的博客中，别人回复了你，才能收到多说官方的邮件提醒。<br>而我编写的这个脚本，也是用于你自己博客中留言的邮件提醒。在你自己的博客中，如果别人回复了你（注意区分概念，是回复了你的某一条评论），多说评论官方会发送邮件提醒，此时，脚本就应该判断这条回复的父评论的作者是否是自己，如果是脚本就不发送提醒邮件，以免重复提醒。<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_settings.jpg" alt="设置多说"></p><h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><ol><li><p>如果新评论数 &lt;= 20，那么显示详细的评论信息，并将文章题目设置为超链接，可以点击访问该文章，效果如下：<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment1.jpg" alt="效果展示1"></p></li><li><p>如果新评论数 &gt; 20，就只是提示功能（显示过多反而不好），如下：<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment2.jpg" alt="效果展示2"></p></li><li><p>正如下面图片中展示的一样，脚本运行发生错误，邮件提示我“获取多说评论后台日志失败”，果然我检测多说网，那天晚上真的宕机了，不过第二天又恢复正常了~.~<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/duoshuo_comment3.jpg" alt="效果展示3"></p></li></ol><hr><h2 id="配置文件-config-conf"><a href="#配置文件-config-conf" class="headerlink" title="配置文件 (_config.conf)"></a>配置文件 (_config.conf)</h2><pre><code>[duoshuo_account]short_name = 你在多说评论站点注册的多说二级域名secret = 站点密钥myself_author_id = 你的多说id，用于剔除自己给别人的回复提醒（这个id不好找，希望你能找到）myself_author_url = 你的个人主页[email_info]email_host = smtp.xxx.com    # 请确保你的邮箱开启了SMTP服务from_address = 发生邮件的邮箱地址email_password = 邮箱密码to_address = 接收邮件的邮箱地址</code></pre><p>请认真仔细填写配置文件。</p><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><strong>第一步</strong>：</p><pre><code class="bash">$ git clone https://github.com/LooEv/duoshuo-comment-notifier.git ~/duoshuo-comment-notifier$ chmod +x ~/duoshuo-comment-notifier/comment_notifier.py    #这一步很重要！</code></pre><p><strong>第二步，编辑 <code>_config.conf</code> 文件，将自己的配置信息填写完整。</strong></p><p><strong>第三步，设置定时运行脚本</strong>：<br>在 Linux中，运行下面的命令：</p><pre><code class="bash">$ crontab -e    # 编辑当前用户的crontab文件</code></pre><p>添加下面的内容：</p><pre><code class="bash">0,30 8-23 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1# 每天8点到23点之间每隔30分钟执行脚本* 8-23/1 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1# 或者每天8点到23点之间每隔1小时执行脚本* 8-23/5 * * * /usr/bin/env python ~/duoshuo-comment-notifier/comment_notifier.py &gt;/dev/null 2&gt;&amp;1# 或者每天8点到23点之间每隔5小时执行脚本</code></pre><p>视自己的情况而定，选择适当的间隔周期执行脚本。<br><code>&gt;/dev/null 2&gt;&amp;1</code> 表示将脚本的标准输出流和标准错误流都不显示（不用担心，脚本设置的日志文件依然会产生，以便我们发现问题所在），防止 crontab 产生的日志文件过大。<br><strong>注意</strong>：如果你正在使用多个版本的 python，请自行修改上面代码中的 <code>/usr/bin/env python</code>，尽量将执行这个脚本的python的路径定死，并确保该python版本环境下安装了所需的第三方库。<br>恩，那什么，如果你没有 vps,使用的是 Windows 系统，可以使用创建<strong>计划任务</strong>的方式运行脚本，这里就不涉及相关教程了，如有需要请自行 google。</p><h2 id="让脚本更加友好"><a href="#让脚本更加友好" class="headerlink" title="让脚本更加友好"></a>让脚本更加友好</h2><p>为了让脚本的功能更加人性化，我设置了如下的特性：</p><ul><li>如果新评论数大于20条，就不显示评论的详细信息，只提示评论数，并提示你登录多说网查看详情，因为如果信息过多的话也不方便在邮件里面阅读。</li><li>当脚本由于某些原因运行失败，比如无法获取多说网的数据，如果连续运行失败的次数 &lt;= 2，就发送提醒邮件，提醒你检查原因；如果连续运行失败的次数 &gt; 2，就不再发送邮件，因为如果我们暂时不方便修复脚本，提醒邮件就会一直发，让人心烦，所以需要设置这个判断功能。</li><li>如果脚本连续运行失败的次数过多，而只会发送两封提醒邮件，如果你太忙很容易忘记这件事儿。为了不让你忘记检查原因，就每隔一定时间重新发送提醒邮件给你，发送邮件的周期请自行修改，因为这个周期需要根据你设置的执行脚本的间隔周期调整，才能起到既提醒了你又不扰人的效果。</li><li>如果脚本运行的日志文件过大，会发送邮件提醒你删除日志（这种情况应该很少会出现，不过以防万一）。</li></ul><h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>如果你想要了解具体的实现细节（比如函数功能的介绍等），可以查看我的 github，请点击 <a href="https://github.com/LooEv/duoshuo-comment-notifier#实现细节" rel="external nofollow noopener noreferrer" target="_blank">这里</a>。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;如果你的博客使用了多说评论，那么很不幸，你的博客有了新留言你收不到提醒。多说评论系统设定的是只有别人回复了你的留言才会邮件通知你。虽然刚开始写博客的时候，给我们留言的人很少，或者也许以后也没有多少留言（&lt;strong&gt;此处应该有一个笑哭的表情&lt;/strong&gt;，此刻看看窗外，那只猫也在嘲笑我），不过如果有人给我们留言了，那我们及时回复他也是一种尊重他的表现，所以用 python 编写了一个脚本解决多说评论的不完美提醒。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="邮件提醒" scheme="http://threehao.com/tags/%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92/"/>
+    
+      <category term="多说评论" scheme="http://threehao.com/tags/%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>帮助你更快地安装vim插件 YouCompleteMe</title>
+    <link href="http://threehao.com/2016/10/21/A-bridge-to-YouCompleteMe/"/>
+    <id>http://threehao.com/2016/10/21/A-bridge-to-YouCompleteMe/</id>
+    <published>2016-10-21T12:05:42.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>之前在刚开始使用Linux系统时，需要配置一个称手的 vim 学习编程。偶然的机会，加入了 细学python QQ群，这个群给了我很多帮助和启发，谢谢。群主 <a href="https://github.com/denglj" rel="external nofollow noopener noreferrer" target="_blank">阿驹</a> 做了一个教学视频，推荐我们使用 <strong><a href="https://github.com/wklken/k-vim" rel="external nofollow noopener noreferrer" target="_blank">k-vim</a></strong>。配置 vim，肯定少不了智能补全插件 <a href="https://github.com/Valloric/YouCompleteMe" rel="external nofollow noopener noreferrer" target="_blank">YouCompleteMe</a>，但是国内安装这个插件很慢，很容易安装失败，因为这个插件异常大，超过 200M。我记得很清楚，我安装了两次才成功安装好这个插件，而且耗时很久。我想应该很多人都会遇到这个问题，会很苦恼。<a id="more"></a></p><h2 id="如果安装超时"><a href="#如果安装超时" class="headerlink" title="如果安装超时"></a>如果安装超时</h2><p>通过安装 k-vim 自动安装并编译 YouCompleteMe 插件，如果出现 timeout 的错误导致安装失败，根据 <a href="https://github.com/junegunn/vim-plug/wiki/faq#youcompleteme-timeout" rel="external nofollow noopener noreferrer" target="_blank">junegunn/vim-plug</a>  的帮助文档，在 vim 中执行如下命令（单独安装 YouCompleteMe，这种情况下不会出现 timeout的异常）：</p><pre><code class="bash">:PlugInstall YouCompleteMe</code></pre><h2 id="如果你还是没有安装成功"><a href="#如果你还是没有安装成功" class="headerlink" title="如果你还是没有安装成功"></a>如果你还是没有安装成功</h2><p>我在购买的国外的 vps 上使用 fabric 工具定时 clone 最新的 YouCompleteMe.git，然后打包，将整个文件 YouCompleteMe.tar.gz 上传至国内的 <a href="https://www.qiniu.com/" rel="external nofollow noopener noreferrer" target="_blank">七牛云</a>。我们在国内下载七牛云上面的资源是相当快的，希望对你有所帮助。</p><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a><strong>使用方法</strong></h2><pre><code class="bash">$ wget -O ~/YouCompleteMe.tar.gz &quot;http://ohpunyak1.bkt.clouddn.com/YouCompleteMe.tar.gz?v=9999&quot;$ cd ~/.vim/bundle$ tar -zxf ~/YouCompleteMe.tar.gz</code></pre><p>（为什么要在 YouCompleteMe.tar.gz 文件名后面加上 <code>?v=9999</code> 呢？原因请见这篇链接文章的 <a href="http://threehao.com/2016/08/22/Github%20Pages%20+%20Hexo/">额外说明</a> ）<br>编译YCM，如果需要对C家族的语言进行语义补全支持（有点耗时）：</p><pre><code class="bash">$ cd YouCompleteMe$ ./install.py --clang-completer</code></pre><p>如果不需要对C家族的语言进行语义补全支持：</p><pre><code class="bash">$ cd YouCompleteMe$ ./install.py</code></pre><p>或者使用参数 <code>--all</code> 添加所有的补全，包括(c/c++ c# go python php等)。<br>关于编译，如有疑问，请围观 <a href="https://github.com/Valloric/YouCompleteMe" rel="external nofollow noopener noreferrer" target="_blank">YouCompleteMe 官方git仓库</a>。<br>等待编译结束，然后在 vim 中重新执行如下命令：</p><pre><code class="bash">:PlugInstall YouCompleteMe</code></pre><p>vim 会很快提示你已经安装好 YouCompleteMe 插件。</p><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我的网络带宽也不算好，但是我测试了一下，下载速度还是相当令人满意：</p><pre><code class="bash">$ wget http://ohpunyak1.bkt.clouddn.com/YouCompleteMe.tar.gz--2016-12-06 10:03:31--  http://ohpunyak1.bkt.clouddn.com/YouCompleteMe.tar.gzResolving ohpunyak1.bkt.clouddn.com (ohpunyak1.bkt.clouddn.com)... 117.23.1.26, 125.64.133.135, 182.135.132.138, ...Connecting to ohpunyak1.bkt.clouddn.com (ohpunyak1.bkt.clouddn.com)|117.23.1.26|:80... connected.HTTP request sent, awaiting response... 200 OKLength: 143262975 (137M) [application/x-gzip]Saving to: ‘YouCompleteMe.tar.gz’25% [=============&gt;                                         ] 36,639,259  1.89MB/s  eta 44s</code></pre><p>Ps: 我只是个大自然和 YouCompleteMe 的搬运工。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;之前在刚开始使用Linux系统时，需要配置一个称手的 vim 学习编程。偶然的机会，加入了 细学python QQ群，这个群给了我很多帮助和启发，谢谢。群主 &lt;a href=&quot;https://github.com/denglj&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;阿驹&lt;/a&gt; 做了一个教学视频，推荐我们使用 &lt;strong&gt;&lt;a href=&quot;https://github.com/wklken/k-vim&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;k-vim&lt;/a&gt;&lt;/strong&gt;。配置 vim，肯定少不了智能补全插件 &lt;a href=&quot;https://github.com/Valloric/YouCompleteMe&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;YouCompleteMe&lt;/a&gt;，但是国内安装这个插件很慢，很容易安装失败，因为这个插件异常大，超过 200M。我记得很清楚，我安装了两次才成功安装好这个插件，而且耗时很久。我想应该很多人都会遇到这个问题，会很苦恼。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Vim" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Vim/"/>
+    
+    
+      <category term="YouCompleteMe" scheme="http://threehao.com/tags/YouCompleteMe/"/>
+    
+      <category term="Vim" scheme="http://threehao.com/tags/Vim/"/>
+    
+      <category term="Plugin" scheme="http://threehao.com/tags/Plugin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Linux的一些实用技巧</title>
+    <link href="http://threehao.com/2016/10/18/linux-utility-skills/"/>
+    <id>http://threehao.com/2016/10/18/linux-utility-skills/</id>
+    <published>2016-10-18T12:15:37.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>此博文会分享给大家一些我在使用Linux系统过程中学到或者总结的实用技巧。既然选择了计算机编程这个行业，那么熟练使用Linux是非常有必要的。所以如果你是编程的初学者，建议你要学习使用Linux系统，你可以随便看看一些互联网招聘平台，上面发布的招聘信息里面，其中大部分都提到了对Linux系统的要求。所以，骚年，别犹豫了，就一个字：学！<a id="more"></a></p><h2 id="sudo-命令"><a href="#sudo-命令" class="headerlink" title="sudo 命令"></a>sudo 命令</h2><p>Linux 下使用 sudo 命令，可以让普通用户临时执行一些或者全部的 root 命令。<br>在/etc/sudoers 文件中进行设置哪些用户可以临时获得 root 权限：</p><pre><code class="bash">vagrant ALL=(ALL) ALL</code></pre><p>上面的例子表示：</p><ul><li>vagrant： 允许<strong>vagrant</strong>用户使用 sudo</li><li>ALL： 允许从任何终端（任何机器）使用 sudo（如果只想让vagrant用户在本主机而不能通过诸如ssh等终端使用sudo，就使用<code>yourhostname</code>代替<code>ALL</code>）</li><li>(ALL): 允许以任何用户执行 sudo 命令</li><li>ALL： 允许 sudo 权限执行任何命令（此处可以指定执行哪些命令）</li></ul><p>很多时候我们会遇到这样一种尴尬情况：使用 vim 编辑了一个没有修改权限的文件，准备保存退出的时候才发现忘记添加 <code>sudo</code> 命令了，只好强制退出去，然后重新加上 <code>sudo</code> 命令使用 vim 进行编辑。。。每每遇到这个事儿都情不自禁地对自己竖起中指把眼镜往上推了推。不过现在无需为此烦恼了，在 vim 的普通模式下，想要修改没有权限的文件，只需要输入 <strong><code>:w !sudo tee %</code></strong>（注意：该有的空格一定要有）就可以解决这个问题！我终于不再对自己竖中指了，哎~.~<br>有时候我们输入了一条很长的命令，按 Enter 之后出现无权限操作的提醒，这时候我们无需使用 <code>Ctrl + P</code> 回到上一条命令，然后在该命令前面加上 <code>sudo</code> 再执行这“该死”的命令，我们只需输入 <code>sudo !!</code> 即可执行上一条命令（这里的 !! 代表上一条命令）。</p><h2 id="zsh使用通配符的问题"><a href="#zsh使用通配符的问题" class="headerlink" title="zsh使用通配符的问题"></a>zsh使用通配符的问题</h2><p>如果你在Linux系统上使用zsh，你需要特别注意一个独特之处：<strong>通配符展开是语言级的，通配符无法匹配是一个语法错误</strong>。比如，我想在centos系统（shell使用的是zsh）中查询man手册有没有中文版的，如下：</p><pre><code class="bash">$ yum list |grep man.*zhzsh: no matches found: man.*zhExiting on Broken Pipe</code></pre><p>在使用 grep 和 find 等命令时，如果使用通配符匹配时，默认情况下，bash 在匹配失败时就使用原来的内容，而 zsh 则会报告一个错误。可以执行下面的命令解决这个问题：</p><pre><code class="bash">$ setopt nonomatch</code></pre><p>在 zsh 中执行 setopt nonomatch 则告诉它不要报告 <code>no matches</code> 的错误，而是当匹配失败时直接使用原来的内容。<br>实际上，不管是 bash 还是 zsh，不管设置了什么选项，只要把 <code>man.*zh</code> 加上引号 <code>&quot;man.*zh&quot;</code>，就可以解决问题。</p><pre><code class="bash">$ yum list |grep &quot;man.*zh&quot;man-pages-zh-CN.noarch                  1.5.2-4.el7                    @base</code></pre><h2 id="关于”man”这个男人的事儿"><a href="#关于”man”这个男人的事儿" class="headerlink" title="关于”man”这个男人的事儿"></a>关于”man”这个男人的事儿</h2><p>当我们使用 minimal 的 Centos 或者 Ubuntu 系统时，有些命令没有安装导致无法使用，比如无法使用 man 命令，因为系统没有自带man手册，这时需要我们手动安装man手册(当然是英文版的):</p><pre><code class="bash">$ sudo yum install man-pages</code></pre><p>如果你还想要安装中文版的man手册，以便在看不明白英文的时候使用，那么你可以执行上一节中的相关命令，查询到man手册中文版安装包的名字，然后安装就可以了。<br>为了更方便在适当的时候使用man中文版手册，我们可以进行一些设置。在~/.bashrc（如果你使用的是zsh，那么在~/.zshrc）中添加:</p><pre><code class="bash">alias zman=&#39;man -M /usr/share/man/zh_CN&#39;#系统默认公共手册页地址一般在：/usr/share/man下面</code></pre><p>然后再执行：</p><pre><code class="bash">$ source ~/.bashrc    # 或者 source ~/.zshrc</code></pre><p>这样就可以使用 zman 命令使用中文版的 man 手册了。这里就不 such as 了 ^.^。</p><h2 id="修改Linux系统的时区"><a href="#修改Linux系统的时区" class="headerlink" title="修改Linux系统的时区"></a>修改Linux系统的时区</h2><p>如果我们购买了国外的vps用来翻越GFW或者建站，往往需要修改vps的系统时区。有多种方法可以实现修改时区。下面是其中一种：<br>复制相应的时区文件，替换掉系统时区文件；或者创建链接文件</p><pre><code class="bash">$ cp /usr/share/zoneinfo/$主时区/$次时区 /etc/localtime# 在中国可以使用：$ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime# 或者创建软链接$ rm -rf /etc/localtime #先删除默认的时区设置$ ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</code></pre><h2 id="tmux下Vim-colorscheme失效的问题"><a href="#tmux下Vim-colorscheme失效的问题" class="headerlink" title="tmux下Vim colorscheme失效的问题"></a>tmux下Vim colorscheme失效的问题</h2><p>如果你发现在使用 tmux 的时候，vim 的配色显示和你在 bash 或者 zsh 中显示不一样时，你可以试着这样做：</p><ul><li>在 <code>.bashrc</code> 或者 <code>.zshrc</code> 中增加：<pre><code class="bash">alias tmux=&#39;tmux -2&#39;    # 意思是使用256色终端</code></pre></li><li>在 <code>.tmux.conf</code> 文件中增加：<pre><code class="bash">set -g default-terminal &quot;screen-256color&quot;</code></pre></li></ul><p>然后执行 <code>source ~/.bashrc    # 或者 source ~/.zshrc</code><br>什么？！不知道 <code>.tmux.conf</code> 在哪儿？别怕，我最开始使用 tmux 的时候，也不知道在哪儿。这个文件我们可以手动创建并修改，一般存放在下面这两个地方：</p><ul><li>etc/tmux.conf 系统中所有用户的全局配置</li><li>~/.tmux.conf 用户个人的配置</li></ul><p>根据自己的情况选择创建的位置，创建之后最好在 <code>.tmux.conf</code> 文件中添加：</p><pre><code class="bash"># 将 R 设置为加载配置文件，并显示&quot;Config reloaded..&quot;信息bind R source-file ~/.tmux.conf \; display-message &quot;Config reloaded..&quot;</code></pre><p>这样你就可以不重启 tmux ，而使用快捷键 <code>前缀+R</code> 使得 <code>.tmux.conf</code> 配置生效。<br>Ps: tmux 默认的 prefix 键是 <strong><code>Ctrl+b</code></strong>， 建议修改为 <strong><code>Ctrl+a</code></strong>。</p><h2 id="tmux-与-Windows-之间的复制粘贴问题"><a href="#tmux-与-Windows-之间的复制粘贴问题" class="headerlink" title="tmux 与 Windows 之间的复制粘贴问题"></a>tmux 与 Windows 之间的复制粘贴问题</h2><p>如果我们在 Windows 系统中使用 putty 登录 Linux，并且使用 tmux 进行学习和工作，你会发现之前在 putty 中使用很方便的复制粘贴功能不能用了（复制：鼠标左键选择；粘贴：鼠标右键，很方便在 putty 中和 Windows 中互相复制粘贴）。<br>解决办法很简单，按住 <strong><code>shift</code></strong> 键就可以使用鼠标方便地复制粘贴了。</p><p><strong>保持更新</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此博文会分享给大家一些我在使用Linux系统过程中学到或者总结的实用技巧。既然选择了计算机编程这个行业，那么熟练使用Linux是非常有必要的。所以如果你是编程的初学者，建议你要学习使用Linux系统，你可以随便看看一些互联网招聘平台，上面发布的招聘信息里面，其中大部分都提到了对Linux系统的要求。所以，骚年，别犹豫了，就一个字：学！
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Linux" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://threehao.com/tags/Linux/"/>
+    
+      <category term="utility" scheme="http://threehao.com/tags/utility/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用多线程、多进程和协程扫描ip和可用的端口</title>
+    <link href="http://threehao.com/2016/10/08/scan-ip-and-port/"/>
+    <id>http://threehao.com/2016/10/08/scan-ip-and-port/</id>
+    <published>2016-10-08T12:09:24.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>此脚本意在学习多线程threading、多进程multiprocessing、协程以及subprocess的使用。使用subprocess调用系统的ping命令检测给定的ip地址是否能ping通，使用socket扫描给定的ip地址有哪些可用的端口。<a id="more"></a><br><strong> 利用subprocess调用系统的ping命令，函数实现如下：</strong></p><pre><code class="python">def ping(host):    &quot;&quot;&quot;Returns True if host responds to a ping request&quot;&quot;&quot;    ping_str = &quot;-n 1&quot; if platform.system().lower() == &quot;windows&quot; else &quot;-c 1&quot;    return subprocess.call(&quot;ping &quot; + ping_str + &quot; &quot; + host, shell=True) == 0</code></pre><p><strong> 使用装饰器编写了一个计时器，以便比较多线程、多进程和协程的性能</strong></p><pre><code class="python">def used_time(name):    name = &#39;Using the {0} to scan ip &#39;.format(name)    def wrapper(func):        @functools.wraps(func)        def _wrapper(*args, **kwargs):            global available_ip            start_time = timer()            func(*args, **kwargs)            the_time_used = timer() - start_time            print_available_ip()            available_ip = []            print name + &quot;takes {:.3f} seconds&quot;.format(the_time_used)        return _wrapper    return wrapper</code></pre><p>举个例子，使用多线程检测ip是否ping得通：</p><pre><code class="python">@used_time(&#39;threads&#39;)def threads_scan_ip():    &quot;&quot;&quot;I use 64 threads,you can change it base on your situation&quot;&quot;&quot;    q = Queue.Queue()    for prefix in ip_prefix:        map(q.put, xrange(length_of_ip_suffix))        threads = [threading.Thread(target=ping_worker, args=(prefix, q, None)) for i in xrange(64)]        map(lambda t: t.start(), threads)        map(lambda t: t.join(), threads)</code></pre><p>值得注意的是，在统计程序运行时间的时候，在Windows中最好使用time.clock()函数，而在其他平台上最好使用time.time()。<a href="http://jeremybai.github.io/blog/2015/06/10/time_vs_clock" rel="external nofollow noopener noreferrer" target="_blank">Python中time.clock()和time.time()的区别</a>这个网页中有详细的说明，可以学习。</p><pre><code class="python">if platform.system().lower() == &quot;windows&quot;:    timer = time.clockelse:    timer = time.time</code></pre><p><strong>学习到什么</strong><br>在multiprocessing模块中，多个进程之间共享变量可以使用 multiprocessing.Value,multiprocessing.Array 或者 使用multiprocessing.Manager，并且需要将你想要共享的变量作为参数传递到进程中才能成功。详见python标准库（建议多看python官方文档，好处多多）<br>在Windows下使用multiprocessing，有可能会出现如下错误：</p><pre><code>RuntimeError:Attempt to start a new process before the current process            has finished its bootstrapping phase.This probably means that you are on Windows and you have            forgotten to use the proper idiom in the main module:if __name__ == &#39;__main__&#39;:                    freeze_support()...The &quot;freeze_support()&quot; line can be omitted if the program            is not going to be frozen to produce a Windows executable.</code></pre><p>解决方法是在使用multiprocessing模块里面的类和函数之前，添加<strong><code>multiprocessing.freeze_support()</code></strong>语句，并确保在<strong><code>if __name__ == &#39;__main__&#39;</code></strong>下执行代码。</p><p>如果你想看看源代码，可以点击<a href="https://github.com/LooEv/learning-python/blob/master/scan_ip_port/scan_ip_and_port.py" rel="external nofollow noopener noreferrer" target="_blank">这里</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此脚本意在学习多线程threading、多进程multiprocessing、协程以及subprocess的使用。使用subprocess调用系统的ping命令检测给定的ip地址是否能ping通，使用socket扫描给定的ip地址有哪些可用的端口。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="threading" scheme="http://threehao.com/tags/threading/"/>
+    
+      <category term="multiprocessing" scheme="http://threehao.com/tags/multiprocessing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Simple Markdown Parser by Python</title>
+    <link href="http://threehao.com/2016/09/21/simple-markdown-parser-by-python/"/>
+    <id>http://threehao.com/2016/09/21/simple-markdown-parser-by-python/</id>
+    <published>2016-09-21T12:32:15.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>此小项目来源于《python基础教程》一书中最后的10个项目中的第一个项目。我借鉴项目中的一些优秀的分析方法，经过改编，编写了这个简易的markdown文件解析器。目前实现了解析标题、列表、代码块、图片链接、超链接、段落等常用的语法。<a id="more"></a><br>针对这个程序，可以列出如下一些模块：</p><ul><li><strong>分析器</strong>：增加一个对象用于读取文本，并管理其他的类</li><li><strong>规则</strong>：可以为每种类型的块制定一条规则，规则能够检测出块的类型并进行相应的格式化</li><li><strong>过滤器</strong>：使用过滤器来包装一些处理内嵌元素的正则表达式</li><li><strong>处理程序</strong>：分析器使用处理程序来产生输出。每个处理程序能产生一种不同类型的标记。</li></ul><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><pre><code class="bash">$ python simplemarkdown.py &lt; test_input.txt &gt; test_output.html</code></pre><h3 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h3><p>此项目的难点在于如何解析列表和代码块，因为列表和代码块往往分布在多行，需要判断列表和代码块什么时候开始、什么时候结束，而且有时候列表中还会出现换行的情况。<br>我采取的方法是先将列表内容或者代码块内容塞进一个列表中，然后进行统一处理，而不是采用一行一行的方式进行处理。例如，下面是处理代码块的代码：</p><pre><code class="python">class CodeRule(object):    type = &#39;code&#39;    inside = False    content = []    def condition(self, element):        if element.startswith(&quot;```&quot;):            self.inside = not self.inside            return True        if self.inside:            return True    def action(self, element, handler, *args):        if self.condition(element):            self.content.append(element)            return &#39;code&#39;        if self.content:            handler.start(self.type)            for line in self.content[1:-1]:                handler.feed(line)            handler.end(self.type)            self.content = []</code></pre><h3 id="学习到什么"><a href="#学习到什么" class="headerlink" title="学习到什么"></a>学习到什么</h3><p>此项目让我对程序模块化有了更深的认识，程序模块化对于程序是否有良好的可扩展性具有重要意义。当程序越来越复杂的时候，往往需要进行一些抽象来使得程序更加可控。</p><p><a href="https://github.com/LooEv/learning-python/tree/master/SimpleMarkdown" rel="external nofollow noopener noreferrer" target="_blank">点击此处可以查看源代码</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;此小项目来源于《python基础教程》一书中最后的10个项目中的第一个项目。我借鉴项目中的一些优秀的分析方法，经过改编，编写了这个简易的markdown文件解析器。目前实现了解析标题、列表、代码块、图片链接、超链接、段落等常用的语法。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="Markdown" scheme="http://threehao.com/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>部署django：uwsgi+supervisor+nginx</title>
+    <link href="http://threehao.com/2016/09/05/deploy-django-uwsgi/"/>
+    <id>http://threehao.com/2016/09/05/deploy-django-uwsgi/</id>
+    <published>2016-09-05T04:34:00.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocf3ikxr2.bkt.clouddn.com/django/deploy-django2.png" alt=""><br><strong>测试django项目能否正常运行，运行开发服务器测试，确保开发服务器下能正常打开网站</strong></p><pre><code class="bash">$ python manage.py runserver 10.70.73.191:8000</code></pre><p><strong>安装 nginx 和需要的包</strong></p><pre><code class="bash">$ sudo apt-get install  nginx$ sudo pip install supervisor uwsgi</code></pre><p><strong>使用supervisor管理进程</strong><br>生成supervisor默认配置文件</p><pre><code class="bash">$ (sudo) echo_supervisord_conf &gt; /etc/supervisord.conf  </code></pre><p>如果没有root账户，可以先在home目录下生成配置文件，然后move到/etc<br>在supervisord.conf的最后添加代码:</p><pre><code class="bash">[program:mysite]# 使用配置文件ini的方式使用uwsgicommand=/usr/local/bin/uwsgi --ini /home/username/djangode/mysite/uwsgi.inidirectory=/home/username/djangode/mysitestartsecs=0stopwaitsecs=0autostart=trueautorestart=trueredirect_stderr=truestdout_logfile_maxbytes=20MBstdoiut_logfile_backups=20#设置日志存放目录stderr_logfile=/home/username/djangode/mysite/log/error.logstdout_logfile=/home/username/djangode/mysite/log/out.log</code></pre><p><strong>在 /path/to/project 下建立一个uwsgi.ini 文件，内容如下：</strong></p><pre><code>[uwsgi]socket = /tmp/mysite.sockchdir=/home/username/djangode/mysitewsgi-file = mysite/wsgi.pytouch-reload=/home/username/djangode/mysite/reloadprocesses = 2threads = 4chmod-socket = 664chown-socket = username:www-data</code></pre><p>然后执行<strong>touch reload</strong>，生成一个名叫reload 的空文件。注意上面的 /tmp/mysite.sock，它会自动生成，一会儿跟nginx关联起来<br>重启一下supervisor：</p><pre><code class="bash">$ sudo supervisorctl  -c  /etc/superviord.conf restart  mysite  </code></pre><p>或者</p><pre><code class="bash">$ sudo supervisorctl  -c  /etc/superviord.conf restart  all</code></pre><p><strong>配置nginx</strong><br>新建一个网站 mysite</p><pre><code class="bash">$ sudo vim /etc/nginx/sites-available/mysite.conf</code></pre><p>写入以下内容：</p><pre><code class="nginx">server {    listen      80;    server_name 10.70.75.191;    charset     utf-8;    access_log  /srv/djangode/log/access_log;    error_log   /srv/djangode/log/error_log;    client_max_body_size    75M;    location /static {        alias /home/username/djangode/mysite/static;    }    location /media {        alias /home/username/djangode/mysite/media;    }    location / {         wsgi_pass  unix:///tmp/mysite.sock;         include     /etc/nginx/uwsgi_params;     }}</code></pre><p><strong>激活网站：</strong></p><pre><code class="bash">$ sudo ln -s /etc/nginx/sites-available/mysite.conf /etc/nginx/sites-enabled/mysite.conf</code></pre><p>测试配置语法问题： <code>sudo service nginx configtest</code><br>重启nginx服务器： <code>sudo service nginx reload</code> 或者 <code>sudo service nginx restart</code></p><p>ps:本文中的IP地址是作者随意写的，如与你的IP雷同，绝对纯属巧合，哈~.~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://ocf3ikxr2.bkt.clouddn.com/django/deploy-django2.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;strong&gt;测试django项目能否正常运行，运行开发服务器测试，确保开发服务器下能正常打开网站&lt;/stro
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="Django" scheme="http://threehao.com/tags/Django/"/>
+    
+      <category term="supervisor" scheme="http://threehao.com/tags/supervisor/"/>
+    
+      <category term="nginx" scheme="http://threehao.com/tags/nginx/"/>
+    
+      <category term="uwsgi" scheme="http://threehao.com/tags/uwsgi/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>部署django：gunicorn+supervisor+nginx</title>
+    <link href="http://threehao.com/2016/09/03/deploy-django-gunicorn/"/>
+    <id>http://threehao.com/2016/09/03/deploy-django-gunicorn/</id>
+    <published>2016-09-03T14:33:11.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocf3ikxr2.bkt.clouddn.com/django/deploy-django2.png" alt=""><br><strong>1、gunicorn 配置文件（我放在django项目文件夹内）：</strong></p><pre><code class="python">import gevent.monkeygevent.monkey.patch_all()import multiprocessingbind = &#39;10.70.75.191:8001&#39;    # your ip addruser = &#39;username&#39;worker_class = &#39;gevent&#39;workers = multiprocessing.cpu_count() * 2 + 1</code></pre><p><strong>2、supervisor配置文件</strong></p><pre><code class="bash">[program:mysite]#gunicorn配置文件所在的目录command=gunicorn mysite.wsgi-c /home/username/djangode/mysite/gunicorn.confdirectory=/home/username/djangode/mysitestartsecs=0stopwaitsecs=0autostart=trueautorestart=trueredirect_stderr=truestdout_logfile_maxbytes=20MBstdoiut_logfile_backups=20#设置日志存放目录stderr_logfile=/home/username/djangode/mysite/log/error.logstdout_logfile=/home/username/djangode/mysite/log/out.log</code></pre><p><strong>3、设置开机自动启动supervisor，在/etc/rc.local 文件中加入：</strong></p><pre><code class="bash">/usr/local/bin/supervisord -c /etc/supervisord.conf</code></pre><p><strong>4、配置nginx</strong></p><pre><code class="nginx">server {    listen      80;    server_name 10.70.75.191;    charset     utf-8;    access_log  /srv/djangode/log/access_log;    error_log   /srv/djangode/log/error_log;    client_max_body_size    75M;    location /static {        alias /home/username/djangode/mysite/static;    }    location /media {        alias /home/username/djangode/mysite/media;    }    location / {         proxy_pass  http://10.70.73.191:8001;        proxy_set_header Host               $host;        proxy_set_header X-Real-IP          $remote_addr;         proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;     }}</code></pre><p>在配置nginx时，出现<strong> *1 connect() failed (111: Connection refused) while connecting to upstream</strong>的错误！原因是因为<strong>proxy_pass</strong>使用的是localhost的8001端口即 <strong><a href="http://127.0.0.1:8001" rel="external nofollow noopener noreferrer" target="_blank">http://127.0.0.1:8001</a></strong>。后来终于找到解决办法了，需要使用<strong><a href="http://10.70.75.191:8001" rel="external nofollow noopener noreferrer" target="_blank">http://10.70.75.191:8001</a></strong>也就是你自己的服务器的IP地址代替<strong><a href="http://127.0.0.1:8001" rel="external nofollow noopener noreferrer" target="_blank">http://127.0.0.1:8001</a></strong></p><p>ps:本文中的IP地址是作者随意写的，如与你的IP雷同，绝对纯属巧合，哈~.~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://ocf3ikxr2.bkt.clouddn.com/django/deploy-django2.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;strong&gt;1、gunicorn 配置文件（我放在django项目文件夹内）：&lt;/strong&gt;&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="Django" scheme="http://threehao.com/tags/Django/"/>
+    
+      <category term="gunicorn" scheme="http://threehao.com/tags/gunicorn/"/>
+    
+      <category term="supervisor" scheme="http://threehao.com/tags/supervisor/"/>
+    
+      <category term="nginx" scheme="http://threehao.com/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>工作、生活中用到的实用小脚本</title>
+    <link href="http://threehao.com/2016/08/25/practical-scripts-for-me/"/>
+    <id>http://threehao.com/2016/08/25/practical-scripts-for-me/</id>
+    <published>2016-08-25T07:09:53.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要包含我用于解决一些小问题的实用脚本（至少对于我来说是这样的）。我所用的系统是Windows 10，虚拟机安装了Ubuntu。主要工作环境还是在Windows下进行的（目前是这样）。其实我编写的这些小脚本的功能Windows已经能够很好解决，比如下面第一个小脚本，用于搜索出目录下的所有bak文件，然后删除，使用Windows的文件搜索功能也能很快解决。我编写这些小脚本的目的主要是为了熟悉使用python。<a id="more"></a></p><h2 id="1-search-bak-and-remove-them"><a href="#1-search-bak-and-remove-them" class="headerlink" title="1. search .bak and remove them"></a>1. search .bak and remove them</h2><pre><code class="python"># coding=utf-8# Author: LooEvimport osimport globfrom fnmatch import fnmatch&quot;&quot;&quot;There are two methods to remove the back-up files.I ues the .dwg files frequently,and it will produce many back-up files.And I wanna remove them.&quot;&quot;&quot;def rm_bak_1(path):    for fn in glob.iglob(path + os.sep + &#39;*&#39;):        if os.path.isdir(fn):            rm_bak_1(fn)        else:            if fnmatch(fn, &#39;*.bak&#39;):                print &#39;removed the file:&#39;, fn.decode(&#39;gbk&#39;)                os.remove(fn)            # if fn.decode(&#39;gbk&#39;).endswith(&#39;.bak&#39;):            #     print fn.decode(&#39;gbk&#39;)            #     os.remove(fn)            # if os.path.splitext(fn)[1] == &#39;.bak&#39;:            #     print fn.decode(&#39;gbk&#39;)            #     os.remove(fn)def rm_bak_2(path):    count = 0    all_bak = 0    for parent, dirnames, filenames in os.walk(path):        for fn in filenames:            if fnmatch(fn, &#39;*bak&#39;):                os.remove(parent + os.sep + fn)                count += 1                all_bak += 1        if count != 0:            print u&quot;在 &quot; + parent.decode(&#39;gbk&#39;) + u&quot; 共删除%d个bak文件&quot; % count        count = 0    print u&quot;一共删除%d个bak文件&quot; % all_bakpath = os.getcwd()# rm_bak_1(path)rm_bak_2(path)raw_input(&#39;press enter to exit:&#39;)</code></pre><p>此脚本我使用了两种方式遍历目录：</p><ol><li>利用glob模块进行递归筛选出所有文件夹</li><li>利用os模块的walk()函数遍历出所有文件</li></ol><p>而在判断文件是否是后缀名为<strong>.bak</strong>的文件，可以三种方式：</p><ol><li>利用fnmatch模块的fnmatch函数判断</li><li>利用字符串string的endswith()函数</li><li>利用os.path.splitext()</li></ol><p><strong>保持更新</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要包含我用于解决一些小问题的实用脚本（至少对于我来说是这样的）。我所用的系统是Windows 10，虚拟机安装了Ubuntu。主要工作环境还是在Windows下进行的（目前是这样）。其实我编写的这些小脚本的功能Windows已经能够很好解决，比如下面第一个小脚本，用于搜索出目录下的所有bak文件，然后删除，使用Windows的文件搜索功能也能很快解决。我编写这些小脚本的目的主要是为了熟悉使用python。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="script" scheme="http://threehao.com/tags/script/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python爬取历年排列三的中奖号码并简单分析</title>
+    <link href="http://threehao.com/2016/08/24/fetch-the-win-num-of-pailiesan/"/>
+    <id>http://threehao.com/2016/08/24/fetch-the-win-num-of-pailiesan/</id>
+    <published>2016-08-24T11:55:59.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>编写此脚本使我熟悉了BeautifulSoup、pandas、matplotlib以及数据库的操作使用。</p><h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><ul><li>python 2.7</li><li>BeautifulSoup4</li><li>pandas 0.16.2</li><li>matplotlib 1.4.3<a id="more"></a></li></ul><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul><li><p>第一次运行程序，会爬取所有期数的中奖号码，存入数据库。以后再次运行程序，程序首先判断是否存在数据库文件，如果存在，则找出上一次插入的最大期数，然后补插后面新出的中奖号码。</p><pre><code class="python">def connect_db(self):      self.db = sqlite3.connect(&#39;winning_numbers.db&#39;)      self.cursor = self.db.cursor()      create_table = &#39;&#39;&#39;create table lottery (                    id      int unsigned not null   primary key,                    first   int unsigned not null,                    second  int unsigned not null,                    third   int unsigned not null      )&#39;&#39;&#39;      try:          self.cursor.execute(&#39;SELECT max(id) FROM lottery&#39;)          self.max_id_inserted = self.cursor.fetchall()[0][0]      except:          self.cursor.execute(create_table)          self.max_id_inserted = None</code></pre></li><li><p>分析中奖号码<br>每一期的中奖号码为三个0-9的数字，统计每一期中奖号码的和值，应该符合正态分布，的确如此：<br><img src="http://ocf3ikxr2.bkt.clouddn.com/python/normal_distribution_pls.jpg" alt="normal distribution"></p><p>统计0-9出现的次数，如下图：</p><p><img src="http://ocf3ikxr2.bkt.clouddn.com/python/pailiesan0_9.jpg" alt="等概率事件"></p><p>这个小脚本完成之时，排列三已经开出了4100多期的中奖号码，每一期出三个数字（可重复）， 4100x3=12300，平分到0-9这10个数字，每个数字理论上出现的次数为<strong>1230</strong>次。上面的图显示，出现次数最少的是1，最多的是4，0-9每个数字的出现次数的统计结果还是比较符合理论的。</p></li><li>根据需求，筛选出最近n期的中奖号码，并以表格的形式打印出来：<pre><code>最近10期的中奖号码：  期号    百位  十位  个位 +---------------------------+|  16214  |  8  |  2  |  8  |+---------------------------+|  16213  |  6  |  5  |  8  |+---------------------------+|  16212  |  6  |  9  |  3  |+---------------------------+|  16211  |  4  |  6  |  3  |+---------------------------+|  16210  |  3  |  0  |  5  |+---------------------------+|  16209  |  2  |  9  |  9  |+---------------------------+|  16208  |  2  |  8  |  4  |+---------------------------+|  16207  |  7  |  7  |  5  |+---------------------------+|  16206  |  7  |  8  |  8  |+---------------------------+|  16205  |  4  |  3  |  5  |+---------------------------+</code></pre></li></ul><p>完整代码见：<a href="https://github.com/LooEv/learning-python/blob/master/winning_numbers_of_pailiesan/win_num.py" rel="external nofollow noopener noreferrer" target="_blank">winging_numbers.py</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;编写此脚本使我熟悉了BeautifulSoup、pandas、matplotlib以及数据库的操作使用。&lt;/p&gt;
+&lt;h2 id=&quot;Requirements&quot;&gt;&lt;a href=&quot;#Requirements&quot; class=&quot;headerlink&quot; title=&quot;Requirements&quot;&gt;&lt;/a&gt;Requirements&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;python 2.7&lt;/li&gt;
+&lt;li&gt;BeautifulSoup4&lt;/li&gt;
+&lt;li&gt;pandas 0.16.2&lt;/li&gt;
+&lt;li&gt;matplotlib 1.4.3
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Python" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Python/"/>
+    
+    
+      <category term="python" scheme="http://threehao.com/tags/python/"/>
+    
+      <category term="爬虫" scheme="http://threehao.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="数据分析" scheme="http://threehao.com/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>爱的小故事</title>
+    <link href="http://threehao.com/2016/08/23/love-story/"/>
+    <id>http://threehao.com/2016/08/23/love-story/</id>
+    <published>2016-08-23T15:19:15.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocf3ikxr2.bkt.clouddn.com/lovelife/love_story.png" alt="I love you" style="display:block;margin:auto"><br>　　这个小故事是我大学的时候写的，当时是为了参加智联招聘微信公众号（不要以为我不知道你以为我在打广告！其实并没有）的一个写作竞赛，奖品还不错（多天真，还想得奖！）。那个写作竞赛要求写一个爱情故事，获赞最多的文章就能获奖。现在看来，这件事儿应该放在“傻事”列表里面。我写的故事是这样的：<br>　　我依然清晰地记得，那时候她大一，我大二。她叫吴小美。2012年11月15日，星期四。那天正好天气很美丽，我和寝室的两个室友相约去打羽毛球。来到羽毛球场地，发现只剩一个场子了，我们赶紧把它占领了。打着打着，有三个人走向我们，其中一个就是吴小美。她，并不是特别漂亮，但是是我喜欢的类型。那三个人中的一个男生问我们可不可以一起打，我当然激动不已地说，当然可以。就这样我们认识了。在一起打羽毛球的过程中，我得知到了她是哪个专业，哪个年级，哪里人，以及最重要的信息，她的QQ。<br>　　我和她聊了十来天的QQ，我发现我越来越喜欢她了，此刻真的是心动不如行动，我决定追她。那时候她是大一，晚上需要统一上晚自习，我很容易就知道了她在哪个教室上晚自习。我去找在学生会工作的一个同学借了一个证件，装扮成负责点名的人去她们上晚自习的教室点名。我故作镇定地走进那个教室，其实当时紧张得要命。我站在讲台，大声说到：开始点名。这时候吴小美抬起了头，她很惊讶，怎么会是我来点名。我继续我的点名，我对着下面说：今天，我只点一个名，而且，被我点到的那个人还能获得一瓶奶茶。当时整个班上的人都疯了，沸腾了，搞不清楚我在干嘛。吴小美也一样很惊讶。我摆摆手，对他们说：安静，我开始点名，吴小美，吴小美来了没。吴小美缓缓地举起了她的手，我装作不认识她，走到她面前，对她说到：原来是这位漂亮的女生啊，来，送你一瓶奶茶。说完我把奶茶放到了她的桌子上。然后我鼓起最大的勇气，继续说：吴小美，你准备好了吗，接下来我要开始追你了。全班再次轰动了，吴小美害羞地趴在桌子上，把脸遮了起来。我给她说了一句我走了，然后我大步离开了那个让我惊心动魄的教室。<br>　　接下来，我就开启了厚脸皮模式，倾尽所有心思去追求她，每一天都想办法给她惊喜，对她好，给她送小礼物，给她讲笑话，逗她开心。每天晚自习下课，我都会跟在她和她朋友的后面，静静地跟着。不知道那时候她心里是苦恼，还是甜蜜。我还专门去买了一辆自行车，接她上下课，一开始她死活不愿意坐我的车，我就推着车陪着她走路上课。时间渐渐过去一个月。突然有一天，她对我说：“我走累了，我坐你自行车吧”。终于幸福花开了。我记得很清楚，那天是我骑自行车蹬得最有劲儿的一天。像一阵风，像一场雨，夹着花香。如今，我的自行车后座上总有一个她，我们一起，每个日子，都幸福甜蜜。<br>　　吴小美，我曾经以为喜欢上一个人会很难，原来那是因为你还没出现。你的出现，打乱我的所有规则，爱的规则。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://ocf3ikxr2.bkt.clouddn.com/lovelife/love_story.png&quot; alt=&quot;I love you&quot; style=&quot;display:block;margin:auto&quot;&gt;&lt;br&gt;　　这个小故事是我大学的时候
+      
+    
+    </summary>
+    
+      <category term="生活与工作" scheme="http://threehao.com/categories/%E7%94%9F%E6%B4%BB%E4%B8%8E%E5%B7%A5%E4%BD%9C/"/>
+    
+    
+      <category term="love" scheme="http://threehao.com/tags/love/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用Github Pages + Hexo搭建个人博客</title>
+    <link href="http://threehao.com/2016/08/22/Github%20Pages%20+%20Hexo/"/>
+    <id>http://threehao.com/2016/08/22/Github Pages + Hexo/</id>
+    <published>2016-08-22T11:47:09.000Z</published>
+    <updated>2018-08-07T08:20:25.452Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocf3ikxr2.bkt.clouddn.com/lovelife/hello_world.png" alt="hello world" style="display:block;margin:auto;"><br>对于我来说，今天是个重要的日子，因为今天是开始写博客的日子。理所当然，第一篇博客应该写自己是如何“折腾”出自己的博客的。之前我使用的主题是<a href="https://github.com/ppoffice/hexo-theme-hueman" rel="external nofollow noopener noreferrer" target="_blank"><strong>hueman</strong></a>，后来我又改成了<a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" rel="external nofollow noopener noreferrer" target="_blank"><strong>raytaylorism</strong></a>，并不是说我不专一，只是说我在寻找适合我的^.^。我在Windows系统环境下搭建此博客的。<a id="more"></a><br>整个网络中已经有太多太多的人写过类似的教程了，按照他们的教程，你完全可以搭建出漂亮的博客，而我写这篇文章主要是对整个搭建过程进行适当总结，以及对主题中修改了的细节进行适当说明，希望对使用该主题的人有一定的帮助。</p><h2 id="搭建过程（简易版）"><a href="#搭建过程（简易版）" class="headerlink" title="搭建过程（简易版）"></a>搭建过程（简易版）</h2><hr><h3 id="环境配置，安装所需软件"><a href="#环境配置，安装所需软件" class="headerlink" title="环境配置，安装所需软件"></a>环境配置，安装所需软件</h3><p>需要用到的软件有：</p><ul><li><a href="https://nodejs.org/en/download/" title="下载Node.js" rel="external nofollow noopener noreferrer" target="_blank">Node.js</a></li><li><a href="https://git-scm.com/download/" title="下载git" rel="external nofollow noopener noreferrer" target="_blank">git</a></li></ul><h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><pre><code class="bash">$ npm install hexo-cli -g$ cd the_path_you_wanna_build_blog$ hexo init &lt;your_blog_name&gt; # your_blog_name 可以缺省$ npm install$ hexo g # 或者hexo generate$ hexo s # 或者hexo server，可以在http://localhost:4000/ 查看</code></pre><h3 id="Hexo主题设置"><a href="#Hexo主题设置" class="headerlink" title="Hexo主题设置"></a>Hexo主题设置</h3><p>你可以在<a href="https://hexo.io/themes/" rel="external nofollow noopener noreferrer" target="_blank">官网</a> 或者 <a href="https://github.com/hexojs/hexo/wiki/Themes" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/hexojs/hexo/wiki/Themes</a> 选择你需要的主题<br><strong>下载主题</strong></p><pre><code class="bash">$ git clone &lt;repository&gt; themes/&lt;theme-name&gt;</code></pre><p><strong>启用主题</strong><br>修改your_blog_name目录下的_config.yml配置文件中的theme属性，将其设置为上面的 theme-name<br>修改设置后如果在浏览器中没有看到想要的效果，使用<code>$ hexo clean</code>来清除缓存，然后重新生成静态文件<code>$ hexo g</code><br><strong>修改主题</strong><br>修改主题是在 theme\your_theme 目录下进行相关操作的，本节内容主要讲的是修改 raytaylorism 主题。使用 raytaylorism 主题的注意事项在该主题的官方 github 地址中已经说明得很清楚了，只需要严格按着开发者要求做，就不会出现什么大问题。</p><ol><li>如果你想使用英文语言，建议将 languages 下的 default.yml 文件名修改为 en.yml，因为我在电脑上使用 default.yml 的时候，网页的语言会偶尔变成中文或者繁体，不知道什么原因。</li><li>如果你觉得正文在大屏幕下显得太窄（默认为700px定宽），可以修改 <code>source\css\_base\lib_customize.styl</code> 中的 <code>.container</code> 类的宽度设置，修改之后往往会出现右侧的目录栏与正文重叠的情况，继续修改 <code>source\css\_partial\tablecontents.styl</code> 里面的 <code>left calc(50% + 350px)</code> ，建议修为 <code>350px</code> 为你的正文宽度的一半，或者你自行调整直至满意。</li><li>在 <code>layout\_partial\plugin\reward.ejs</code> 文件中可以替换转账二维码和显示的“打赏文本”。</li><li>站点分析工具我使用的是百度分析平台，在 _config.yml 配置文件中添加<code>baidu_analytics:</code>，然后将你的百度分析ID添加在后面。接着在 <code>layout\_partial\plugin\analytics.ejs</code> 文件后面添加如下代码：<pre><code class="javascript">&lt;% if (theme.baidu_analytics){ %&gt;&lt;script&gt;var _hmt = _hmt || [];(function() {var hm = document.createElement(&quot;script&quot;);hm.src = &quot;https://hm.baidu.com/hm.js?&lt;%= theme.baidu_analytics %&gt;&quot;;var s = document.getElementsByTagName(&quot;script&quot;)[0]; s.parentNode.insertBefore(hm, s);})();&lt;/script&gt;&lt;% } %&gt;</code></pre></li><li>为 raytaylorism 主题添加统计站点访问量的功能：<br>在 <code>layout\_partial\after_footer.ejs</code> 文件中添加如下代码：<pre><code class="javascript">&lt;script async src=&quot;//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;</code></pre>然后将 <code>layout\_partial\footer.ejs</code> 文件中最后一个 <code>&lt;p&gt;</code> 元素替换成下面的代码：<pre><code class="javascript">&lt;p class=&quot;right&quot; style=&quot;margin-top: 0;&quot;&gt;&lt;span id=&quot;busuanzi_container_site_uv&quot; style=&quot;display: none;&quot;&gt;您好，您是本站点的第 &lt;span id=&quot;busuanzi_value_site_uv&quot; style=&quot;color: yellow;&quot;&gt;&lt;/span&gt; 位访客，祝您生活工作愉快&lt;/span&gt;&lt;/p&gt;</code></pre>如果想给每篇文章添加统计阅读量，我的做法是在 <code>layout\_partial\aticle.ejs</code> 文件中的 <code>&lt;%- partial(&#39;post/time&#39;) %&gt;</code> 行后面添加如下代码：<pre><code class="javascript">&lt;div style=&quot;float: right;color: #E91E63&quot;&gt;&lt;span id=&quot;busuanzi_container_page_pv&quot; style=&quot;display: none;&quot;&gt;阅读次数 &lt;span id=&quot;busuanzi_value_page_pv&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</code></pre><strong>提醒</strong>，不要把上面的代码添加到 <code>layout\_partial\post\time.ejs</code> 文件后面，虽然说也可以到达目的，但是（但是来了），你会发现别人访问你首页的时候，会出现一个大大的、让你害羞、让别人尴尬的“阅读次数xxx”字样。更多细节可以访问<a href="http://ibruce.info/2015/04/04/busuanzi/" rel="external nofollow noopener noreferrer" target="_blank">不蒜子</a></li></ol><h3 id="创建github个人主页"><a href="#创建github个人主页" class="headerlink" title="创建github个人主页"></a>创建github个人主页</h3><p>在github上创建username/username.github.io的仓库，<a href="http://username.github.io/" rel="external nofollow noopener noreferrer" target="_blank">http://username.github.io/</a>这以后就是你的个人主页<br>特别提醒一下，需要注意的是个人主页的网站内容是存在于master分支下的。</p><h3 id="部署Hexo到Github-Pages"><a href="#部署Hexo到Github-Pages" class="headerlink" title="部署Hexo到Github Pages"></a>部署Hexo到Github Pages</h3><p>修改your_blog_name目录下的_config.yml配置文件中的deploy属性：</p><pre><code>deploy:  type: git  repo: git@github.com:username/username.github.io.git  branch: master</code></pre><p>使用下面的命令部署到Github Pages：</p><pre><code class="bash">$ npm install hexo-deployer-git    --save  # 部署所需的插件,加上--save比较好$ hexo deploy # 或者 hexo d</code></pre><h2 id="跨电脑使用Hexo"><a href="#跨电脑使用Hexo" class="headerlink" title="跨电脑使用Hexo"></a>跨电脑使用Hexo</h2><hr><p>很多情况下，我们会在不同的电脑上写自己的博客，怎么才能同步使用呢？最简单的方法就是将your_blog_name目录下的所有文件推送至新建的某个远程仓库。<br>首先，删除你下载的主题文件夹里面的.git文件夹，这样才能将下载的修改后的主题推送至远程仓库。</p><pre><code class="bash">$ cd your_blog_name$ git init$ git add -A$ git commit -m &quot;something&quot;$ git remote add origin git@github.com:username/new_repository.git$ git push origin master</code></pre><p>在别的电脑上写博客的时候，先按照前面的要求安装好所需的软件，然后执行如下命令：</p><pre><code class="bash">$ git clone git@github.com:username/new_repository.git# 然后进入该 git 仓库执行下面的命令：$ npm install # 记得不需要执行 hexo init 这条命令！！！</code></pre><p>接着安装你需要用到的 hexo 插件，比如 hexo-generator-feed 和 hexo-generator-sitemap等。<br>大功告成，又可以开始写博客了。</p><h2 id="额外说明"><a href="#额外说明" class="headerlink" title="额外说明"></a>额外说明</h2><hr><p>当使用图床的时候，比如七牛云，如果你多次上传同名的文件，会出现资源不会更新的情况，比如你修改了一张图片之后重新上传到七牛云，然而你会发现你的网页中的图片依然没有更新。我们在开发中，需要更新 css，html 等静态资源。而且在七牛是同名资源覆盖，这就导致文件在七牛源站更新后，却取的是 cdn 的旧缓存。最好的解决办法是在使用资源链接的时候在链接后面加上<strong><code>?v=……</code></strong>，省略号是表示版本号，你自己定义。如果你带了<strong><code>?v=1234</code></strong>这样的查询参数在文件 url 后面，就变成了不同的 url，所以不会命中 cdn 的缓存，会去原站七牛拉资源，这时候拉取到的资源就变成了覆盖更新后的资源了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://ocf3ikxr2.bkt.clouddn.com/lovelife/hello_world.png&quot; alt=&quot;hello world&quot; style=&quot;display:block;margin:auto;&quot;&gt;&lt;br&gt;对于我来说，今天是个重要的日子，因为今天是开始写博客的日子。理所当然，第一篇博客应该写自己是如何“折腾”出自己的博客的。之前我使用的主题是&lt;a href=&quot;https://github.com/ppoffice/hexo-theme-hueman&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;hueman&lt;/strong&gt;&lt;/a&gt;，后来我又改成了&lt;a href=&quot;https://github.com/raytaylorlin/hexo-theme-raytaylorism&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;raytaylorism&lt;/strong&gt;&lt;/a&gt;，并不是说我不专一，只是说我在寻找适合我的^.^。我在Windows系统环境下搭建此博客的。
+    
+    </summary>
+    
+      <category term="技术" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="Hexo" scheme="http://threehao.com/categories/%E6%8A%80%E6%9C%AF/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://threehao.com/tags/hexo/"/>
+    
+      <category term="raytaylorism主题" scheme="http://threehao.com/tags/raytaylorism%E4%B8%BB%E9%A2%98/"/>
+    
+  </entry>
+  
+</feed>

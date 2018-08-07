@@ -1,0 +1,708 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>利用Github Pages + Hexo搭建个人博客 | Loo&#39;s Blog</title>
+    <meta name="author" content="三好先生">
+    
+    <meta name="description" content="对于我来说，今天是个重要的日子，因为今天是开始写博客的日子。理所当然，第一篇博客应该写自己是如何“折腾”出自己的博客的。之前我使用的主题是hueman，后来我又改成了raytaylorism，并不是说我不专一，只是说我在寻找适合我的^.^。我在Windows系统环境下搭建此博客的。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="利用Github Pages + Hexo搭建个人博客">
+    <meta property="og:site_name" content="Loo&#39;s Blog.让故事有营养。">
+
+    
+    <meta property="og:image" content="undefined">
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Loo&#39;s Blog.让故事有营养。" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.9.0/styles/solarized-dark.min.css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+</html>
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Loo&#39;s Blog.让故事有营养。</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/">
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives">
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading">
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about">
+                            <i class="fa fa-user "></i>
+                            
+                            关于我
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search">
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://ocf3ikxr2.bkt.clouddn.com/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Loo小强</p>
+                        <p class="desc">Python/Web开发/Linux</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/">
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives">
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu">
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading">
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about">
+                    <i class="fa fa-user "></i>
+                    
+                    关于我
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search">
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术/">
+                    技术 <span class="right">11 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Python/">
+                    Python <span class="right">8 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Hexo/">
+                    Hexo <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/Vim/">
+                    Vim <span class="right">1 篇</span></a>
+                
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活与工作/">
+                    生活与工作 <span class="right">2 篇</span></a>
+                
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/Hexo/">Hexo</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>利用Github Pages + Hexo搭建个人博客</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-08-22T11:47:09.000Z"><a href="/2016/08/22/Github Pages + Hexo/">2016-08-22</a></time>
+
+            <div style="float: right;color: #E91E63">
+    <span id="busuanzi_container_page_pv" style="display: none;">
+    阅读次数 <span id="busuanzi_value_page_pv"></span></span>
+</div>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/hexo/" class="chip pink lighten-1">hexo</a>
+        
+            <a href="/tags/raytaylorism主题/" class="chip pink lighten-1">raytaylorism主题</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#搭建过程（简易版）"><span class="section table-of-contents-text">搭建过程（简易版）</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#环境配置，安装所需软件"><span class="section table-of-contents-text">环境配置，安装所需软件</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#安装Hexo"><span class="section table-of-contents-text">安装Hexo</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Hexo主题设置"><span class="section table-of-contents-text">Hexo主题设置</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#创建github个人主页"><span class="section table-of-contents-text">创建github个人主页</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#部署Hexo到Github-Pages"><span class="section table-of-contents-text">部署Hexo到Github Pages</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#跨电脑使用Hexo"><span class="section table-of-contents-text">跨电脑使用Hexo</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#额外说明"><span class="section table-of-contents-text">额外说明</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><img src="http://ocf3ikxr2.bkt.clouddn.com/lovelife/hello_world.png" alt="hello world" style="display:block;margin:auto;"><br>对于我来说，今天是个重要的日子，因为今天是开始写博客的日子。理所当然，第一篇博客应该写自己是如何“折腾”出自己的博客的。之前我使用的主题是<a href="https://github.com/ppoffice/hexo-theme-hueman" rel="external nofollow noopener noreferrer" target="_blank"><strong>hueman</strong></a>，后来我又改成了<a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" rel="external nofollow noopener noreferrer" target="_blank"><strong>raytaylorism</strong></a>，并不是说我不专一，只是说我在寻找适合我的^.^。我在Windows系统环境下搭建此博客的。<a id="more"></a><br>整个网络中已经有太多太多的人写过类似的教程了，按照他们的教程，你完全可以搭建出漂亮的博客，而我写这篇文章主要是对整个搭建过程进行适当总结，以及对主题中修改了的细节进行适当说明，希望对使用该主题的人有一定的帮助。</p>
+<h2 id="搭建过程（简易版）"><a href="#搭建过程（简易版）" class="headerlink" title="搭建过程（简易版）"></a>搭建过程（简易版）</h2><hr>
+<h3 id="环境配置，安装所需软件"><a href="#环境配置，安装所需软件" class="headerlink" title="环境配置，安装所需软件"></a>环境配置，安装所需软件</h3><p>需要用到的软件有：</p>
+<ul>
+<li><a href="https://nodejs.org/en/download/" title="下载Node.js" rel="external nofollow noopener noreferrer" target="_blank">Node.js</a></li>
+<li><a href="https://git-scm.com/download/" title="下载git" rel="external nofollow noopener noreferrer" target="_blank">git</a></li>
+</ul>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><pre><code class="bash">$ npm install hexo-cli -g
+$ cd the_path_you_wanna_build_blog
+$ hexo init &lt;your_blog_name&gt; # your_blog_name 可以缺省
+$ npm install
+$ hexo g # 或者hexo generate
+$ hexo s # 或者hexo server，可以在http://localhost:4000/ 查看
+</code></pre>
+<h3 id="Hexo主题设置"><a href="#Hexo主题设置" class="headerlink" title="Hexo主题设置"></a>Hexo主题设置</h3><p>你可以在<a href="https://hexo.io/themes/" rel="external nofollow noopener noreferrer" target="_blank">官网</a> 或者 <a href="https://github.com/hexojs/hexo/wiki/Themes" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/hexojs/hexo/wiki/Themes</a> 选择你需要的主题<br><strong>下载主题</strong></p>
+<pre><code class="bash">$ git clone &lt;repository&gt; themes/&lt;theme-name&gt;
+</code></pre>
+<p><strong>启用主题</strong><br>修改your_blog_name目录下的_config.yml配置文件中的theme属性，将其设置为上面的 theme-name<br>修改设置后如果在浏览器中没有看到想要的效果，使用<code>$ hexo clean</code>来清除缓存，然后重新生成静态文件<code>$ hexo g</code><br><strong>修改主题</strong><br>修改主题是在 theme\your_theme 目录下进行相关操作的，本节内容主要讲的是修改 raytaylorism 主题。使用 raytaylorism 主题的注意事项在该主题的官方 github 地址中已经说明得很清楚了，只需要严格按着开发者要求做，就不会出现什么大问题。</p>
+<ol>
+<li>如果你想使用英文语言，建议将 languages 下的 default.yml 文件名修改为 en.yml，因为我在电脑上使用 default.yml 的时候，网页的语言会偶尔变成中文或者繁体，不知道什么原因。</li>
+<li>如果你觉得正文在大屏幕下显得太窄（默认为700px定宽），可以修改 <code>source\css\_base\lib_customize.styl</code> 中的 <code>.container</code> 类的宽度设置，修改之后往往会出现右侧的目录栏与正文重叠的情况，继续修改 <code>source\css\_partial\tablecontents.styl</code> 里面的 <code>left calc(50% + 350px)</code> ，建议修为 <code>350px</code> 为你的正文宽度的一半，或者你自行调整直至满意。</li>
+<li>在 <code>layout\_partial\plugin\reward.ejs</code> 文件中可以替换转账二维码和显示的“打赏文本”。</li>
+<li>站点分析工具我使用的是百度分析平台，在 _config.yml 配置文件中添加<code>baidu_analytics:</code>，然后将你的百度分析ID添加在后面。接着在 <code>layout\_partial\plugin\analytics.ejs</code> 文件后面添加如下代码：<pre><code class="javascript">&lt;% if (theme.baidu_analytics){ %&gt;
+&lt;script&gt;
+var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement(&quot;script&quot;);
+hm.src = &quot;https://hm.baidu.com/hm.js?&lt;%= theme.baidu_analytics %&gt;&quot;;
+var s = document.getElementsByTagName(&quot;script&quot;)[0]; 
+s.parentNode.insertBefore(hm, s);
+})();
+&lt;/script&gt;
+&lt;% } %&gt;
+</code></pre>
+</li>
+<li>为 raytaylorism 主题添加统计站点访问量的功能：<br>在 <code>layout\_partial\after_footer.ejs</code> 文件中添加如下代码：<pre><code class="javascript">&lt;script async src=&quot;//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+然后将 <code>layout\_partial\footer.ejs</code> 文件中最后一个 <code>&lt;p&gt;</code> 元素替换成下面的代码：<pre><code class="javascript">&lt;p class=&quot;right&quot; style=&quot;margin-top: 0;&quot;&gt;
+&lt;span id=&quot;busuanzi_container_site_uv&quot; style=&quot;display: none;&quot;&gt;
+您好，您是本站点的第 &lt;span id=&quot;busuanzi_value_site_uv&quot; style=&quot;color: yellow;&quot;&gt;&lt;/span&gt; 位访客，祝您生活工作愉快
+&lt;/span&gt;&lt;/p&gt;
+</code></pre>
+如果想给每篇文章添加统计阅读量，我的做法是在 <code>layout\_partial\aticle.ejs</code> 文件中的 <code>&lt;%- partial(&#39;post/time&#39;) %&gt;</code> 行后面添加如下代码：<pre><code class="javascript">&lt;div style=&quot;float: right;color: #E91E63&quot;&gt;
+&lt;span id=&quot;busuanzi_container_page_pv&quot; style=&quot;display: none;&quot;&gt;
+阅读次数 &lt;span id=&quot;busuanzi_value_page_pv&quot;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/div&gt;
+</code></pre>
+<strong>提醒</strong>，不要把上面的代码添加到 <code>layout\_partial\post\time.ejs</code> 文件后面，虽然说也可以到达目的，但是（但是来了），你会发现别人访问你首页的时候，会出现一个大大的、让你害羞、让别人尴尬的“阅读次数xxx”字样。更多细节可以访问<a href="http://ibruce.info/2015/04/04/busuanzi/" rel="external nofollow noopener noreferrer" target="_blank">不蒜子</a></li>
+</ol>
+<h3 id="创建github个人主页"><a href="#创建github个人主页" class="headerlink" title="创建github个人主页"></a>创建github个人主页</h3><p>在github上创建username/username.github.io的仓库，<a href="http://username.github.io/" rel="external nofollow noopener noreferrer" target="_blank">http://username.github.io/</a>这以后就是你的个人主页<br>特别提醒一下，需要注意的是个人主页的网站内容是存在于master分支下的。</p>
+<h3 id="部署Hexo到Github-Pages"><a href="#部署Hexo到Github-Pages" class="headerlink" title="部署Hexo到Github Pages"></a>部署Hexo到Github Pages</h3><p>修改your_blog_name目录下的_config.yml配置文件中的deploy属性：</p>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:username/username.github.io.git
+  branch: master
+</code></pre><p>使用下面的命令部署到Github Pages：</p>
+<pre><code class="bash">$ npm install hexo-deployer-git    --save  # 部署所需的插件,加上--save比较好
+$ hexo deploy # 或者 hexo d
+</code></pre>
+<h2 id="跨电脑使用Hexo"><a href="#跨电脑使用Hexo" class="headerlink" title="跨电脑使用Hexo"></a>跨电脑使用Hexo</h2><hr>
+<p>很多情况下，我们会在不同的电脑上写自己的博客，怎么才能同步使用呢？最简单的方法就是将your_blog_name目录下的所有文件推送至新建的某个远程仓库。<br>首先，删除你下载的主题文件夹里面的.git文件夹，这样才能将下载的修改后的主题推送至远程仓库。</p>
+<pre><code class="bash">$ cd your_blog_name
+$ git init
+$ git add -A
+$ git commit -m &quot;something&quot;
+$ git remote add origin git@github.com:username/new_repository.git
+$ git push origin master
+</code></pre>
+<p>在别的电脑上写博客的时候，先按照前面的要求安装好所需的软件，然后执行如下命令：</p>
+<pre><code class="bash">$ git clone git@github.com:username/new_repository.git
+
+# 然后进入该 git 仓库执行下面的命令：
+$ npm install # 记得不需要执行 hexo init 这条命令！！！
+</code></pre>
+<p>接着安装你需要用到的 hexo 插件，比如 hexo-generator-feed 和 hexo-generator-sitemap等。<br>大功告成，又可以开始写博客了。</p>
+<h2 id="额外说明"><a href="#额外说明" class="headerlink" title="额外说明"></a>额外说明</h2><hr>
+<p>当使用图床的时候，比如七牛云，如果你多次上传同名的文件，会出现资源不会更新的情况，比如你修改了一张图片之后重新上传到七牛云，然而你会发现你的网页中的图片依然没有更新。我们在开发中，需要更新 css，html 等静态资源。而且在七牛是同名资源覆盖，这就导致文件在七牛源站更新后，却取的是 cdn 的旧缓存。最好的解决办法是在使用资源链接的时候在链接后面加上<strong><code>?v=……</code></strong>，省略号是表示版本号，你自己定义。如果你带了<strong><code>?v=1234</code></strong>这样的查询参数在文件 url 后面，就变成了不同的 url，所以不会命中 cdn 的缓存，会去原站七牛拉资源，这时候拉取到的资源就变成了覆盖更新后的资源了。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2016/08/23/love-story/" rel="next" title="爱的小故事">
+    上一篇：爱的小故事
+  </a>
+</p>
+
+
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/08/22/Github Pages + Hexo/" data-title="利用Github Pages + Hexo搭建个人博客" data-url="http://threehao.com/2016/08/22/Github Pages + Hexo/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'exyloo'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1" data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://twitter.com/ExyLoo" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-twitter"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/LooEv" target="_blank" rel="external nofollow noopener noreferrer">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank" rel="external nofollow noopener noreferrer">林寿山的技术博客</a>
+                
+                    <a class="social-link" href="http://ajucs.com/" target="_blank" rel="external nofollow noopener noreferrer">阿驹的博客</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 三好先生 threehao.com<span>&nbsp;</span>
+            <i class="fa fa fa-heart"></i>
+            <p class="right" style="margin-top: 0;">
+            <span id="busuanzi_container_site_uv" style="display: none;">
+            您好，您是本站点的第 <span id="busuanzi_value_site_uv" style="color: yellow;"></span> 位访客，祝您生活工作愉快
+            </span></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-search').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?96fbeb5ef19833b99e20089f1b2c8575";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+
